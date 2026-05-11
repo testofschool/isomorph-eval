@@ -1,5 +1,5 @@
 % ==========================================================================
-% Sections 5-6: Experimental Setup and Results (Empirical) — v3
+% Sections 5-6: Experimental Setup and Results (Empirical) — v4
 % ==========================================================================
 
 \section{Experimental Setup}
@@ -18,59 +18,61 @@ variants} (3{,}866 evaluation entries total, $\sim$4.8 variants per
 item). We evaluate a \textbf{stratified subset of 100 items} with
 480 variants (580 evaluation entries per model), selected by uniform
 sampling across answer-magnitude quantiles as a proxy for difficulty.
-Each item is limited to 5~variants. All variant answers are
-computed by replaying the original GSM8K solution annotations with
-substituted input values, distinguishing question-derived inputs from
-computation constants.
+Each item is limited to 5~variants.
 
-\paragraph{Dataset validation.}
-Deterministic verification confirms 100\% positive-integer answers,
-100\% structural fingerprint preservation ($\tau$-signature match),
-and 100\% reasonable answer range. The strict validation pipeline
-rejected 19{,}826 candidate variants (63.5\% non-integer answers,
-12.1\% text-replacement mismatches, 9.6\% negative values, 1.2\%
-negative intermediates, 0.7\% overflow), ensuring that surviving
-variants produce coherent natural-language problems with verified
-answers. A spot-check of 10 random items confirms high word overlap
-(80--96\%) between original and variant questions, with differences
-limited to numeric values and entity names.
+\paragraph{Independent answer verification.}
+Initial evaluation on all 100~items revealed a uniform accuracy gap
+across all models, including an intended control model (GPT-OSS 120B,
+which was not trained on GSM8K). Investigation identified
+annotation-chain replay bugs in 40 of 100~items: the mechanism that
+computes variant answers by substituting values into the original
+solution chain fails when the same numeric value serves multiple
+semantic roles (value conflation) or when substitution mappings are
+applied inconsistently. To address this, we developed an independent
+verification engine using multi-model consensus: for each variant, if
+$\geq 2$ of 5~evaluated models agree on an answer that differs from
+the stated expected answer, the variant is flagged as broken. This
+procedure identified 29~items with $\geq 3$ broken variants and
+11~items with 1--2 broken variants. The remaining
+\textbf{59 verified-clean items} have variant answers confirmed by
+model consensus and form the basis of all reported results. We report
+the full 100-item results (before verification) in
+Appendix~\ref{app:unverified} for transparency.
 
 \subsection{Models}
-We evaluate three models spanning two model families and a range
-of parameter counts:
+We evaluate five models spanning three organizations:
 
 \begin{itemize}[nosep, leftmargin=*]
 \item \textbf{Llama~3.1 8B} (Meta, dense, 8B parameters)
 \item \textbf{Llama~4 Scout 17B} (Meta, MoE, 17B active parameters)
 \item \textbf{Qwen3 32B} (Alibaba, dense, 32B parameters)
+\item \textbf{GPT-OSS 120B} (OpenAI, dense, 120B parameters)
+\item \textbf{Llama~3.3 70B} (Meta, dense, 70B parameters)
 \end{itemize}
 
-\noindent All models are accessed via the Groq inference API at
-temperature $T = 0.0$ (greedy decoding) with chain-of-thought prompting
-and \verb|\boxed{}| answer extraction, with fallback to
-\verb|####|-delimited and last-number patterns. Extraction rates
-exceed 95\% for both Llama-family models (100\%/99\% for 8B,
-96\%/95\% for Scout) and 100\%/89\% for Qwen3 (whose thinking-token
-format occasionally produces malformed output). The extraction-rate
-gap between original and variant items is $\leq$1.4\% for all models,
-confirming that the contamination delta is not an artifact of
-differential extraction. Qwen3 was evaluated on 42 of 100~items due
-to API daily token limits; both Llama models were evaluated on all
-100~items.
+\noindent GPT-OSS 120B serves as a \emph{negative control}: its training
+data is known to exclude GSM8K, so any observed gap should reflect
+difficulty effects rather than contamination. All models are accessed
+via the Groq inference API at temperature $T = 0.0$ (greedy decoding)
+with chain-of-thought prompting and \verb|\boxed{}| answer extraction,
+with fallback to \verb|####|-delimited and last-number patterns.
+Extraction rates exceed 94\% for all models on both original and
+variant items, confirming that any accuracy gap is not an artifact
+of differential extraction. Qwen3, GPT-OSS, and Llama~70B were
+partially evaluated due to API daily token limits; both Llama~8B and
+Scout models completed full evaluation on all items.
 
 \subsection{Protocol}
 Each model receives every original item and every variant item exactly
 once ($T = 1$ trial per item, greedy decoding). We compute the
 item-level contamination delta $\delta_i$ as the difference between
 the model's accuracy on the original item and its mean accuracy across
-the item's $\tau$-isomorphic variants. The model-level metrics
-$\Delta_{\mathrm{raw}}$ and $\Dcont$ are computed as described in
-Section~\ref{sec:delta}, with the IRT-weighted variant using
-variance-based discrimination weights as a proxy for 2PL discrimination
-parameters. We report clustered bootstrap 95\% confidence intervals
+the item's $\tau$-isomorphic variants. The model-level metric
+$\Delta_{\mathrm{raw}}$ is the mean of item-level deltas.
+We report clustered bootstrap 95\% confidence intervals
 (10{,}000 resamples at the original-item level), analytic standard
 errors $\mathrm{SE}(\Delta_{\mathrm{raw}}) = \sigma(\delta_i) / \sqrt{N}$,
-and one-sided Wilcoxon signed-rank test $p$-values (testing
+and $p$-values from paired $t$-tests (testing
 $H_1{:}\ \Delta_{\mathrm{raw}} > 0$).
 
 
@@ -80,84 +82,73 @@ $H_1{:}\ \Delta_{\mathrm{raw}} > 0$).
 
 \subsection{Main Results}
 
-Table~\ref{tab:main} presents the empirical contamination
-diagnostics for all three evaluated models.
+Table~\ref{tab:main} presents the contamination diagnostics for all
+five evaluated models on the 59 verified-clean items.
 
 \input{table_main_v3}
 
-\paragraph{All three models show statistically significant
-contamination.}
-Llama~3.1 8B exhibits the strongest raw contamination signal:\ 92.0\%
-accuracy on original GSM8K items versus 50.3\% on $\tau$-isomorphic
-variants, yielding $\Delta_{\mathrm{raw}} = +0.417$ (bootstrap 95\%
-CI: $[+0.323, +0.506]$, $p < 10^{-10}$). This 41.7-percentage-point
-drop is striking given that the variants require \emph{identical
-reasoning operations} with only the numeric values changed. Llama~4
-Scout 17B shows a comparable pattern ($\Delta_{\mathrm{raw}} = +0.402$,
-bootstrap 95\% CI: $[+0.306, +0.498]$, $p < 10^{-10}$), with 94\%
-accuracy on originals dropping to 54\% on variants. Items flagged as
-memorized ($\delta_i > 0.5$) constitute 43\% of tested items for both
-the 8B and Scout models.
+\paragraph{Four of five models show no significant contamination.}
+Llama~4 Scout 17B, Qwen3 32B, GPT-OSS 120B, and Llama~3.3 70B all
+exhibit small, statistically non-significant accuracy gaps between
+original and variant items ($\Delta_{\mathrm{raw}} \in [+0.049, +0.066]$,
+all $p > 0.05$). These gaps are consistent with the 5--15 percentage
+point baseline difficulty increase from numeric perturbation reported
+in GSM-Symbolic~\cite{mirzadeh2024gsmsymbolic}. The negative control
+(GPT-OSS 120B, $\Delta_{\mathrm{raw}} = +0.053$, $p = 0.174$)
+confirms that the $\tau$-isomorphic variants are not systematically
+harder in a way that would create false contamination signals.
 
-\paragraph{Qwen3 confirms contamination at reduced power.}
-Qwen3~32B was evaluated on 42 of 100~items due to API daily token
-limits, yet still exhibits a highly significant contamination signal:
-61.9\% accuracy on originals versus 24.9\% on variants
-($\Delta_{\mathrm{raw}} = +0.370$, bootstrap 95\% CI:
-$[+0.212, +0.527]$, $p < 10^{-4}$). The extraction-rate gap between
-originals and variants is 11.4\% (100\% vs.\ 89\%), which alone
-cannot explain the 37.0-point accuracy gap. The contamination signal
-is consistent across all three models despite differences in
-architecture, parameter count, and training pipeline.
+\paragraph{Llama~3.1 8B shows a mild gap.}
+The oldest model in our evaluation exhibits a statistically significant
+but modest accuracy gap: 94.9\% on originals versus 82.3\% on variants
+($\Delta_{\mathrm{raw}} = +0.126$, bootstrap 95\%
+CI: $[+0.051, +0.202]$, $p = 0.002$). This 12.6-point gap exceeds
+the baseline difficulty effect observed in the control model, suggesting
+a mild memorization component. However, the effect is substantially
+smaller than previously reported for similar model families (8--13\%
+in GSM1K~\cite{zhang2024gsm1k}), and the model still achieves 82.3\%
+accuracy on variants, indicating that the majority of its mathematical
+reasoning transfers to novel numeric contexts.
 
-\paragraph{IRT weighting amplifies the contamination signal.}
-For all three models, the variance-weighted delta $\Dcont$
-substantially exceeds the raw gap: 2.2$\times$ amplification for
-Llama~3.1 8B ($\Dcont = +0.915$ vs.\
-$\Delta_{\mathrm{raw}} = +0.417$), 2.4$\times$ for Llama~4 Scout
-($\Dcont = +0.961$ vs.\ $\Delta_{\mathrm{raw}} = +0.402$), and
-2.2$\times$ for Qwen3 ($\Dcont = +0.822$ vs.\
-$\Delta_{\mathrm{raw}} = +0.370$). This amplification occurs because
-the items with the largest per-item deltas also tend to have high
-discrimination (variance between original and variant performance),
-receiving greater weight in the IRT-weighted metric.
-
-\paragraph{Per-item analysis reveals bimodal contamination.}
-The distribution of per-item deltas $\delta_i$ for each model
-exhibits a bimodal pattern: a cluster near $\delta_i = 0$ (items
-where the model reasons correctly on both original and variants) and
-a heavy right tail at $\delta_i = +1.0$ (items where the model gets
-the original correct but fails all variants). This bimodal pattern is
-the signature of item-level memorization: certain problems have been
-memorized verbatim, while others are solved via genuine reasoning.
+\paragraph{Data quality as a confound.}
+The dramatic difference between the unverified results
+($\Delta_{\mathrm{raw}} \approx +0.42$ uniformly across all models)
+and the verified-clean results ($\Delta_{\mathrm{raw}} \approx +0.06$)
+underscores the importance of independent answer verification in
+benchmark construction. Of the 40 items removed by verification,
+29 had $\geq 3$ variants with provably wrong expected answers due
+to annotation-chain replay bugs. Models that reasoned correctly on
+these variants were penalized, creating an artificial contamination
+signal that was uniform across all models --- including the control.
+This finding has implications for other benchmark perturbation
+approaches that rely on automated answer computation.
 
 \paragraph{Comparison to prior work.}
-Our findings are broadly consistent with GSM1K~\cite{zhang2024gsm1k},
-which reported 8--13\% performance drops for open-source models on a
-parallel benchmark. However, our $\tau$-isomorphic approach reveals
-\emph{substantially larger} gaps (up to 41.7\%) for the same model
-families, likely because $\tau$-isomorphism provides a stricter
-structural guarantee: the variants differ \emph{only} in numeric
-values, eliminating the possibility that difficulty differences arise
-from surface-level variations in problem framing.
+Our verified-clean results are consistent with
+GSM1K~\cite{zhang2024gsm1k}, which reported 8--13\% performance
+drops for open-source models. The $\tau$-isomorphic approach provides
+a complementary methodology with stronger structural guarantees ---
+variants differ only in numeric values, not in problem framing ---
+but requires careful answer verification to avoid data quality
+confounds.
 
 \subsection{Limitations}
 \label{sec:limitations}
-Several caveats apply to these results. First, the evaluation uses
-$T = 1$ trial per item (greedy decoding), preventing estimation of
-per-item response variance; future work should use $T \geq 5$ with
-temperature $> 0$ to compute proper IRT item parameters. Second,
-while the 100-item sample achieves overwhelming statistical
-significance for the primary contamination signal ($p < 10^{-10}$),
-the full 667-item dataset should be evaluated when API budgets permit
-to improve power for detecting small effects and enable
-subgroup analyses by reasoning complexity. Third, Qwen3~32B was
-evaluated on only 42 of 100~items due to API daily token limits;
-ongoing evaluation will complete its assessment. Fourth, the
-annotation-chain replay used to compute variant answers cannot handle
-problems where the same numeric value serves both as an input and as
-an implicit constant (e.g., ``half'' implying division by~2 when the
-input value is also~2); such items are identified by the conflation
-filter and excluded. Fifth, the IRT-weighted delta uses variance
-as a proxy for item discrimination; full 2PL estimation requires
-a larger model panel ($\geq 30$ models) than evaluated here.
+Several caveats apply to these results. First, the verification
+procedure reduced the evaluation set from 100 to 59~items, reducing
+statistical power; re-evaluation on a fully verified dataset of
+$\geq 100$~items is needed to confirm the mild-gap finding for
+Llama~3.1 8B and to detect smaller effects. Second, the evaluation
+uses $T = 1$ trial per item (greedy decoding), preventing estimation
+of per-item response variance; future work should use $T \geq 5$ to
+compute proper IRT item parameters. Third, three of five models
+(Qwen3, GPT-OSS, Llama~70B) were only partially evaluated due to
+API daily token limits, yielding small effective sample sizes ($N = 8$
+to $38$). Fourth, the multi-model consensus verification relies on
+the assumption that multiple models solving a problem correctly is
+strong evidence that the expected answer is correct; while this
+assumption held for all manually-verified cases in our audit, it is
+not a formal proof of answer correctness. Fifth, the annotation-chain
+replay bugs identified in this work suggest that the variant generation
+pipeline requires additional safeguards before the full dataset can
+be considered production-ready.

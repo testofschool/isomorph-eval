@@ -188,11 +188,15 @@ four diagnostic archetypes: \emph{Robust Reasoner}, \emph{Pure
 Memorizer}, \emph{Syntactic Matcher}, and \emph{Latent Contaminator}.
 In controlled simulations, the IRT-weighted delta is 23$\times$ more
 discriminative than the raw accuracy gap used by prior methods.
-Empirical evaluation on three real LLMs confirms that the framework
-detects statistically significant contamination ($p < 10^{-4}$) in
-all three tested models, with $\Delta_{\mathrm{raw}}$ from $+0.370$
-to $+0.417$ on 100 stratified GSM8K items. IRT weighting amplifies
-the contamination signal by 2.2--2.4$\times$.
+Empirical evaluation on five LLMs (including a negative control with
+no GSM8K in its training data) on 59 verified-clean GSM8K items shows
+that four of five models exhibit no significant contamination
+($\Delta_{\mathrm{raw}} \in [+0.049, +0.066]$, all $p > 0.05$),
+while Llama~3.1 8B shows a mild gap ($\Delta_{\mathrm{raw}} = +0.126$,
+$p = 0.002$). Critically, the framework also uncovered a data quality
+confound in annotation-chain replay that inflated apparent
+contamination signals uniformly across all models, demonstrating the
+importance of independent answer verification in benchmark construction.
 \end{enumerate}
 
 \paragraph{The unified theory.}
