@@ -4,7 +4,7 @@
 
 ### Is your model a reasoner — or a memorizer?
 
-**The first unified framework for contamination-proof AI evaluation**<br>
+**A unified framework for contamination-resistant AI evaluation**<br>
 **combining structurally equivalent benchmarks with Item Response Theory**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2606.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2606.XXXXX)
@@ -26,8 +26,8 @@
 
 > *Tomás keeps a busy apiary. His bees produce 23 jars of honey every day. Each morning, he sets aside 5 jars for breakfast recipes, and every afternoon he processes another 7 jars into beeswax candles for the village cooperative. He takes whatever jars remain to the harbor market, where each one sells for €3. How many euros does Tomás earn at the harbor market each day?*
 
-Same reasoning graph. Same difficulty. Same IRT discrimination parameter.<br>
-Completely novel surface. **Never existed on the internet.**
+Same reasoning graph. Structurally equivalent — difficulty equivalence is empirically tested, not assumed.<br>
+Completely novel surface. **Generated with fresh entity/value combinations.**
 
 If performance drops — that 92% was memory, not math.
 
@@ -61,7 +61,7 @@ We proved through a 150-condition grid sweep that ranking accuracy degrades mono
 
 *How do we evaluate when benchmarks are contaminated?*
 
-We formalize **τ-isomorphism** — a graph-theoretic definition of structural equivalence — and build an engine that generates unlimited verified variants of any benchmark item. Then we measure the gap.
+We formalize **τ-isomorphism** — a graph-theoretic definition of structural equivalence — and build an engine that produces verified τ-isomorphic variants at arbitrary scale for any benchmark item. Then we measure the gap.
 
 **Isomorph-Eval fixes WHAT we test.** → [Paper](https://arxiv.org/abs/2606.XXXXX)
 
@@ -220,7 +220,7 @@ isomorph-eval/
 | Feature | GSM1K | ConStat | LiveBench | PSN-IRT | **Isomorph-Eval** |
 |---------|-------|---------|-----------|---------|-------------------|
 | Structural isomorphism | ❌ | ❌ | ❌ | ❌ | ✅ τ-isomorphism |
-| Infinite generation | ❌ Fixed 1,250 | ❌ | ❌ Monthly | ❌ | ✅ Unlimited |
+| Scalable generation | ❌ Fixed 1,250 | ❌ | ❌ Monthly | ❌ | ✅ Arbitrary scale |
 | IRT difficulty correction | ❌ | ❌ Regression | ❌ | ✅ | ✅ 2PL DIF |
 | Contamination detection | ✅ Gap | ✅ p-value | ❌ Prevention | ❌ | ✅ Δ<sub>contam</sub><sup>IRT</sup> |
 | Sparsity correction | ❌ | ❌ | ❌ | Partial | ✅ via EFSL |
