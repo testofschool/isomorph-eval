@@ -1,0 +1,131 @@
+\pdfoutput=1
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
+\usepackage[inline]{enumitem}
+\usepackage{xspace}
+
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{proposition}{Proposition}
+\newcommand{\Dcont}{\Delta_{\mathrm{contam}}^{\mathrm{IRT}}\xspace}
+
+\title{Isomorph-Eval: Separating Reasoning from Recall in LLM Evaluation\\
+via Structurally Equivalent Benchmarks and Item Response Theory}
+
+\author{Jung Min Kang\thanks{Corresponding author. Email: gangjeongmin23@gmail.com}\\
+Independent Researcher\\
+Seoul, South Korea}
+
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The credibility of AI evaluation is threatened by two compounding
+failures: benchmark contamination (test items leak into training data)
+and naive aggregation (simple averaging ignores item difficulty and data
+sparsity). We present \textbf{Isomorph-Eval}, a unified framework that
+addresses both. We formalize \emph{$\tau$-isomorphism}, a graph-theoretic
+definition of structural equivalence between benchmark items, and build
+an open-source \emph{Isomorphic Engine} that generates unlimited
+verified variants of existing benchmark items with automatically computed
+answers. We define the \emph{Contamination Delta}
+$\Delta_{\mathrm{contam}}^{\mathrm{IRT}}$, an IRT-weighted metric
+grounded in Differential Item Functioning, that quantifies memorization
+by comparing model performance on original items versus structurally
+equivalent variants. In controlled simulations, the IRT-weighted delta
+is 23$\times$ more discriminative than raw accuracy gaps. Applied to
+GSM8K with five LLMs (including a negative control), evaluation on
+59 independently verified items shows that four of five models exhibit
+no significant contamination ($\Delta \in [+0.049, +0.066]$, all
+$p > 0.05$), while one model shows a mild gap
+($\Delta = +0.126$, $p = 0.002$). Critically, the framework uncovered
+a data quality confound in annotation-chain replay that inflated
+apparent contamination signals uniformly across all models, demonstrating
+the importance of independent answer verification in benchmark
+construction. We release the complete pipeline as open-source software.
+\end{abstract}
+
+\input{paper_outline_and_intro}
+\input{section4_methodology}
+\input{section5_6_empirical}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented Isomorph-Eval, a unified framework for detecting
+benchmark contamination while correcting for data sparsity and item
+difficulty heterogeneity. The framework makes three contributions:
+(1)~$\tau$-isomorphism formalizes structural equivalence between
+benchmark items via graph-theoretic invariants; (2)~the Isomorphic
+Engine generates unlimited verified variants with automatically computed
+answers; and (3)~the Contamination Delta $\Dcont$ provides an
+IRT-grounded diagnostic that is 23$\times$ more discriminative than
+raw accuracy gaps in controlled simulations.
+
+Our empirical evaluation on GSM8K with five models revealed an
+important methodological lesson: initial results suggested uniform
+contamination across all models ($\Delta \approx +0.42$), but
+independent answer verification identified broken variant answers in
+40\% of items. On the 59 verified-clean items, the contamination
+signal collapsed to $\Delta \approx +0.05$--$0.13$, with only
+Llama~3.1 8B showing a mild but significant gap. This finding
+underscores that \emph{answer verification must be independent of the
+generation pipeline}---a principle that applies to any benchmark
+perturbation methodology.
+
+The $\tau$-isomorphism framework and the Isomorphic Engine are the
+lasting contributions of this work. They provide a principled
+methodology for generating structurally equivalent benchmark variants
+that can be applied to any binary-scored evaluation task with
+decomposable reasoning structure. We release the complete pipeline
+as open-source software at
+\url{https://github.com/testofschool/isomorph-eval}.
+
+\paragraph{Future work.}
+Three directions are priorities: (1)~fixing the annotation-chain
+replay bugs and regenerating variants for the full dataset to increase
+statistical power; (2)~extending the framework beyond mathematical
+reasoning to logic, code generation, and scientific reasoning;
+(3)~fitting full 2PL IRT models with $\geq 30$ models to enable
+proper item parameter estimation and DIF testing.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\section{Unverified Results}
+\label{app:unverified}
+
+For transparency, we report the results on all 100 items before
+independent answer verification. These results should \textbf{not} be
+used for contamination claims due to the data quality issues documented
+in Section~\ref{sec:setup}.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Results on all 100 items (before verification). These results are inflated by broken variant answers.}
+\begin{tabular}{lcccc}
+\toprule
+Model & $N$ & Acc$_{\mathrm{orig}}$ & Acc$_{\mathrm{iso}}$ & $\Delta_{\mathrm{raw}}$ \\
+\midrule
+Llama 3.1 8B & 100 & 92.0\% & 50.3\% & $+0.417$ \\
+Llama 4 Scout 17B & 100 & 94.0\% & 53.8\% & $+0.402$ \\
+Qwen3 32B & 70 & 100.0\% & 53.5\% & $+0.465$ \\
+GPT-OSS 120B & 20 & 100.0\% & 57.0\% & $+0.430$ \\
+Llama 3.3 70B & 14 & 100.0\% & 55.7\% & $+0.443$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}
