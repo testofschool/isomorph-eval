@@ -52,11 +52,14 @@ def is_correct(extracted, expected, tol=0.01):
     return abs(extracted - expected) / max(abs(expected), 1e-10) < tol
 
 
-async def evaluate_item(client, model, question, semaphore, temperature=0.0):
+async def evaluate_item(client, model, question, semaphore, temperature=0.0, delay=2.5):
     async with semaphore:
-        await asyncio.sleep(2.5)
+        await asyncio.sleep(delay)
         for attempt in range(4):
             try:
+                extra_kwargs = {}
+                if "qwen3" in model.lower():
+                    extra_kwargs["extra_body"] = {"reasoning_effort": "none"}
                 resp = await client.chat.completions.create(
                     model=model,
                     messages=[
@@ -65,6 +68,7 @@ async def evaluate_item(client, model, question, semaphore, temperature=0.0):
                     ],
                     temperature=temperature,
                     max_tokens=768,
+                    **extra_kwargs,
                 )
                 return resp.choices[0].message.content or ""
             except RateLimitError as e:
@@ -82,7 +86,8 @@ async def evaluate_item(client, model, question, semaphore, temperature=0.0):
 
 
 async def run_evaluation(model, dataset_path, output_path, trials=1,
-                         temperature=0.0, resume=False):
+                         temperature=0.0, resume=False,
+                         concurrency=5, delay=2.5, batch_size=6):
     with open(dataset_path) as f:
         dataset = json.load(f)
 
@@ -139,19 +144,19 @@ async def run_evaluation(model, dataset_path, output_path, trials=1,
             base_url=BASE_URL, api_key=API_KEY,
             timeout=60.0, max_retries=0,
         )
-        semaphore = asyncio.Semaphore(5)
+        semaphore = asyncio.Semaphore(concurrency)
         results = dict(existing_results)
         done = 0
         correct = 0
         t0 = time.time()
         tpd_hit = False
 
-        for i in range(0, total, 6):
+        for i in range(0, total, batch_size):
             if tpd_hit:
                 break
-            batch = schedule[i:i+6]
+            batch = schedule[i:i+batch_size]
             tasks = [
-                evaluate_item(client, model, item["question"], semaphore, temperature)
+                evaluate_item(client, model, item["question"], semaphore, temperature, delay)
                 for item, trial, key in batch
             ]
             responses = await asyncio.gather(*tasks)
@@ -350,6 +355,9 @@ if __name__ == "__main__":
     p.add_argument("--temperature", type=float, default=0.0)
     p.add_argument("--output", default=None)
     p.add_argument("--resume", action="store_true")
+    p.add_argument("--concurrency", type=int, default=5)
+    p.add_argument("--delay", type=float, default=2.5)
+    p.add_argument("--batch-size", type=int, default=6)
     args = p.parse_args()
 
     if args.output is None:
@@ -362,4 +370,5 @@ if __name__ == "__main__":
     asyncio.run(run_evaluation(
         args.model, args.dataset, args.output,
         args.trials, args.temperature, args.resume,
+        args.concurrency, args.delay, args.batch_size,
     ))

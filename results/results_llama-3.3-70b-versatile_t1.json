@@ -1,0 +1,873 @@
+{
+  "model": "llama-3.3-70b-versatile",
+  "dataset": "eval_subset_100.json",
+  "temperature": 0.0,
+  "trials": 1,
+  "n_results": 81,
+  "report": {
+    "n_items": 14,
+    "acc_original": 1.0,
+    "acc_isomorphic": 0.5571428571428572,
+    "delta_raw": 0.44285714285714284,
+    "se_delta": 0.12954454692858552,
+    "ci_95": [
+      0.1889498308771152,
+      0.6967644548371705
+    ],
+    "boot_ci_95": [
+      0.19999999999999998,
+      0.7000000000000001
+    ],
+    "p_value": 0.0078125,
+    "delta_irt": 0.9613793094165993,
+    "n_flagged": 6,
+    "extraction_rate_orig": 1.0,
+    "extraction_rate_var": 0.9850746268656716,
+    "archetype": "PURE_MEMORIZER",
+    "per_item": [
+      {
+        "item_id": "gsm8k_1139",
+        "p_orig": 1.0,
+        "p_iso": 0.0,
+        "delta": 1.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0344",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0328",
+        "p_orig": 1.0,
+        "p_iso": 0.0,
+        "delta": 1.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0470",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_1157",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0789",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 4
+      },
+      {
+        "item_id": "gsm8k_0277",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 3
+      },
+      {
+        "item_id": "gsm8k_0565",
+        "p_orig": 1.0,
+        "p_iso": 0.0,
+        "delta": 1.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_1010",
+        "p_orig": 1.0,
+        "p_iso": 0.0,
+        "delta": 1.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0334",
+        "p_orig": 1.0,
+        "p_iso": 0.6,
+        "delta": 0.4,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0437",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_1247",
+        "p_orig": 1.0,
+        "p_iso": 1.0,
+        "delta": 0.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_1200",
+        "p_orig": 1.0,
+        "p_iso": 0.0,
+        "delta": 1.0,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      },
+      {
+        "item_id": "gsm8k_0263",
+        "p_orig": 1.0,
+        "p_iso": 0.2,
+        "delta": 0.8,
+        "n_orig_trials": 1,
+        "n_var_scores": 5
+      }
+    ]
+  },
+  "raw_results": {
+    "gsm8k_1139_t0": {
+      "item_id": "gsm8k_1139",
+      "trial": 0,
+      "extracted": 1.0,
+      "expected": 1.0,
+      "correct": true,
+      "response_len": 1200,
+      "is_original": true
+    },
+    "gsm8k_1139_v00_t0": {
+      "item_id": "gsm8k_1139_v00",
+      "trial": 0,
+      "extracted": 5.0,
+      "expected": 1.0,
+      "correct": false,
+      "response_len": 920,
+      "is_original": false
+    },
+    "gsm8k_1139_v01_t0": {
+      "item_id": "gsm8k_1139_v01",
+      "trial": 0,
+      "extracted": 8.44,
+      "expected": 1.0,
+      "correct": false,
+      "response_len": 1072,
+      "is_original": false
+    },
+    "gsm8k_1139_v02_t0": {
+      "item_id": "gsm8k_1139_v02",
+      "trial": 0,
+      "extracted": 4.99,
+      "expected": 1.0,
+      "correct": false,
+      "response_len": 1108,
+      "is_original": false
+    },
+    "gsm8k_1139_v03_t0": {
+      "item_id": "gsm8k_1139_v03",
+      "trial": 0,
+      "extracted": 4.93,
+      "expected": 1.0,
+      "correct": false,
+      "response_len": 935,
+      "is_original": false
+    },
+    "gsm8k_1139_v04_t0": {
+      "item_id": "gsm8k_1139_v04",
+      "trial": 0,
+      "extracted": 1.19,
+      "expected": 1.0,
+      "correct": false,
+      "response_len": 1035,
+      "is_original": false
+    },
+    "gsm8k_0344_t0": {
+      "item_id": "gsm8k_0344",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 500,
+      "is_original": true
+    },
+    "gsm8k_0344_v00_t0": {
+      "item_id": "gsm8k_0344_v00",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 502,
+      "is_original": false
+    },
+    "gsm8k_0344_v01_t0": {
+      "item_id": "gsm8k_0344_v01",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 3.0,
+      "correct": true,
+      "response_len": 480,
+      "is_original": false
+    },
+    "gsm8k_0344_v02_t0": {
+      "item_id": "gsm8k_0344_v02",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 498,
+      "is_original": false
+    },
+    "gsm8k_0344_v03_t0": {
+      "item_id": "gsm8k_0344_v03",
+      "trial": 0,
+      "extracted": 6.0,
+      "expected": 6.0,
+      "correct": true,
+      "response_len": 500,
+      "is_original": false
+    },
+    "gsm8k_0344_v04_t0": {
+      "item_id": "gsm8k_0344_v04",
+      "trial": 0,
+      "extracted": 6.0,
+      "expected": 6.0,
+      "correct": true,
+      "response_len": 502,
+      "is_original": false
+    },
+    "gsm8k_0328_t0": {
+      "item_id": "gsm8k_0328",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 594,
+      "is_original": true
+    },
+    "gsm8k_0328_v00_t0": {
+      "item_id": "gsm8k_0328_v00",
+      "trial": 0,
+      "extracted": 1.0,
+      "expected": 54.0,
+      "correct": false,
+      "response_len": 726,
+      "is_original": false
+    },
+    "gsm8k_0328_v01_t0": {
+      "item_id": "gsm8k_0328_v01",
+      "trial": 0,
+      "extracted": 1.75,
+      "expected": 21.0,
+      "correct": false,
+      "response_len": 900,
+      "is_original": false
+    },
+    "gsm8k_0328_v02_t0": {
+      "item_id": "gsm8k_0328_v02",
+      "trial": 0,
+      "extracted": 0.185,
+      "expected": 2.0,
+      "correct": false,
+      "response_len": 1011,
+      "is_original": false
+    },
+    "gsm8k_0328_v03_t0": {
+      "item_id": "gsm8k_0328_v03",
+      "trial": 0,
+      "extracted": 1.1785,
+      "expected": 11.0,
+      "correct": false,
+      "response_len": 989,
+      "is_original": false
+    },
+    "gsm8k_0328_v04_t0": {
+      "item_id": "gsm8k_0328_v04",
+      "trial": 0,
+      "extracted": 0.3,
+      "expected": 2.0,
+      "correct": false,
+      "response_len": 1024,
+      "is_original": false
+    },
+    "gsm8k_0470_t0": {
+      "item_id": "gsm8k_0470",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 3.0,
+      "correct": true,
+      "response_len": 707,
+      "is_original": true
+    },
+    "gsm8k_0470_v00_t0": {
+      "item_id": "gsm8k_0470_v00",
+      "trial": 0,
+      "extracted": 24.0,
+      "expected": 24.0,
+      "correct": true,
+      "response_len": 744,
+      "is_original": false
+    },
+    "gsm8k_0470_v01_t0": {
+      "item_id": "gsm8k_0470_v01",
+      "trial": 0,
+      "extracted": 27.0,
+      "expected": 27.0,
+      "correct": true,
+      "response_len": 752,
+      "is_original": false
+    },
+    "gsm8k_0470_v02_t0": {
+      "item_id": "gsm8k_0470_v02",
+      "trial": 0,
+      "extracted": 8.0,
+      "expected": 8.0,
+      "correct": true,
+      "response_len": 750,
+      "is_original": false
+    },
+    "gsm8k_0470_v03_t0": {
+      "item_id": "gsm8k_0470_v03",
+      "trial": 0,
+      "extracted": 42.0,
+      "expected": 42.0,
+      "correct": true,
+      "response_len": 742,
+      "is_original": false
+    },
+    "gsm8k_0470_v04_t0": {
+      "item_id": "gsm8k_0470_v04",
+      "trial": 0,
+      "extracted": 37.0,
+      "expected": 37.0,
+      "correct": true,
+      "response_len": 744,
+      "is_original": false
+    },
+    "gsm8k_1157_t0": {
+      "item_id": "gsm8k_1157",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 3.0,
+      "correct": true,
+      "response_len": 394,
+      "is_original": true
+    },
+    "gsm8k_1157_v00_t0": {
+      "item_id": "gsm8k_1157_v00",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 594,
+      "is_original": false
+    },
+    "gsm8k_1157_v01_t0": {
+      "item_id": "gsm8k_1157_v01",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 503,
+      "is_original": false
+    },
+    "gsm8k_1157_v02_t0": {
+      "item_id": "gsm8k_1157_v02",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 488,
+      "is_original": false
+    },
+    "gsm8k_1157_v03_t0": {
+      "item_id": "gsm8k_1157_v03",
+      "trial": 0,
+      "extracted": 4.0,
+      "expected": 4.0,
+      "correct": true,
+      "response_len": 502,
+      "is_original": false
+    },
+    "gsm8k_1157_v04_t0": {
+      "item_id": "gsm8k_1157_v04",
+      "trial": 0,
+      "extracted": 4.0,
+      "expected": 4.0,
+      "correct": true,
+      "response_len": 502,
+      "is_original": false
+    },
+    "gsm8k_0789_t0": {
+      "item_id": "gsm8k_0789",
+      "trial": 0,
+      "extracted": 4.0,
+      "expected": 4.0,
+      "correct": true,
+      "response_len": 810,
+      "is_original": true
+    },
+    "gsm8k_0789_v00_t0": {
+      "item_id": "gsm8k_0789_v00",
+      "trial": 0,
+      "extracted": 6.0,
+      "expected": 6.0,
+      "correct": true,
+      "response_len": 727,
+      "is_original": false
+    },
+    "gsm8k_0789_v01_t0": {
+      "item_id": "gsm8k_0789_v01",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 2.0,
+      "correct": true,
+      "response_len": 729,
+      "is_original": false
+    },
+    "gsm8k_0789_v03_t0": {
+      "item_id": "gsm8k_0789_v03",
+      "trial": 0,
+      "extracted": 15.0,
+      "expected": 15.0,
+      "correct": true,
+      "response_len": 690,
+      "is_original": false
+    },
+    "gsm8k_0789_v04_t0": {
+      "item_id": "gsm8k_0789_v04",
+      "trial": 0,
+      "extracted": 43.0,
+      "expected": 43.0,
+      "correct": true,
+      "response_len": 661,
+      "is_original": false
+    },
+    "gsm8k_0277_t0": {
+      "item_id": "gsm8k_0277",
+      "trial": 0,
+      "extracted": 4.0,
+      "expected": 4.0,
+      "correct": true,
+      "response_len": 502,
+      "is_original": true
+    },
+    "gsm8k_0277_v02_t0": {
+      "item_id": "gsm8k_0277_v02",
+      "trial": 0,
+      "extracted": 8.0,
+      "expected": 8.0,
+      "correct": true,
+      "response_len": 871,
+      "is_original": false
+    },
+    "gsm8k_0277_v03_t0": {
+      "item_id": "gsm8k_0277_v03",
+      "trial": 0,
+      "extracted": 27.0,
+      "expected": 27.0,
+      "correct": true,
+      "response_len": 949,
+      "is_original": false
+    },
+    "gsm8k_0277_v04_t0": {
+      "item_id": "gsm8k_0277_v04",
+      "trial": 0,
+      "extracted": 17.0,
+      "expected": 17.0,
+      "correct": true,
+      "response_len": 931,
+      "is_original": false
+    },
+    "gsm8k_0565_t0": {
+      "item_id": "gsm8k_0565",
+      "trial": 0,
+      "extracted": 5.0,
+      "expected": 5.0,
+      "correct": true,
+      "response_len": 606,
+      "is_original": true
+    },
+    "gsm8k_0565_v00_t0": {
+      "item_id": "gsm8k_0565_v00",
+      "trial": 0,
+      "extracted": 24.0,
+      "expected": 35.0,
+      "correct": false,
+      "response_len": 566,
+      "is_original": false
+    },
+    "gsm8k_0565_v01_t0": {
+      "item_id": "gsm8k_0565_v01",
+      "trial": 0,
+      "extracted": 9.0,
+      "expected": 11.0,
+      "correct": false,
+      "response_len": 796,
+      "is_original": false
+    },
+    "gsm8k_0565_v02_t0": {
+      "item_id": "gsm8k_0565_v02",
+      "trial": 0,
+      "extracted": 33.0,
+      "expected": 49.0,
+      "correct": false,
+      "response_len": 638,
+      "is_original": false
+    },
+    "gsm8k_0565_v03_t0": {
+      "item_id": "gsm8k_0565_v03",
+      "trial": 0,
+      "extracted": 12.0,
+      "expected": 17.0,
+      "correct": false,
+      "response_len": 752,
+      "is_original": false
+    },
+    "gsm8k_0565_v04_t0": {
+      "item_id": "gsm8k_0565_v04",
+      "trial": 0,
+      "extracted": 30.0,
+      "expected": 45.0,
+      "correct": false,
+      "response_len": 521,
+      "is_original": false
+    },
+    "gsm8k_1010_t0": {
+      "item_id": "gsm8k_1010",
+      "trial": 0,
+      "extracted": 5.0,
+      "expected": 5.0,
+      "correct": true,
+      "response_len": 612,
+      "is_original": true
+    },
+    "gsm8k_1010_v00_t0": {
+      "item_id": "gsm8k_1010_v00",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 59.0,
+      "correct": false,
+      "response_len": 2157,
+      "is_original": false
+    },
+    "gsm8k_1010_v01_t0": {
+      "item_id": "gsm8k_1010_v01",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 59.0,
+      "correct": false,
+      "response_len": 2648,
+      "is_original": false
+    },
+    "gsm8k_1010_v02_t0": {
+      "item_id": "gsm8k_1010_v02",
+      "trial": 0,
+      "extracted": 9.0,
+      "expected": 88.0,
+      "correct": false,
+      "response_len": 2524,
+      "is_original": false
+    },
+    "gsm8k_1010_v03_t0": {
+      "item_id": "gsm8k_1010_v03",
+      "trial": 0,
+      "extracted": 9.0,
+      "expected": 52.0,
+      "correct": false,
+      "response_len": 2534,
+      "is_original": false
+    },
+    "gsm8k_1010_v04_t0": {
+      "item_id": "gsm8k_1010_v04",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 9.0,
+      "correct": false,
+      "response_len": 2411,
+      "is_original": false
+    },
+    "gsm8k_0334_t0": {
+      "item_id": "gsm8k_0334",
+      "trial": 0,
+      "extracted": 6.0,
+      "expected": 6.0,
+      "correct": true,
+      "response_len": 1181,
+      "is_original": true
+    },
+    "gsm8k_0334_v00_t0": {
+      "item_id": "gsm8k_0334_v00",
+      "trial": 0,
+      "extracted": 10.0,
+      "expected": 10.0,
+      "correct": true,
+      "response_len": 557,
+      "is_original": false
+    },
+    "gsm8k_0334_v01_t0": {
+      "item_id": "gsm8k_0334_v01",
+      "trial": 0,
+      "extracted": 14.0,
+      "expected": 14.0,
+      "correct": true,
+      "response_len": 600,
+      "is_original": false
+    },
+    "gsm8k_0334_v02_t0": {
+      "item_id": "gsm8k_0334_v02",
+      "trial": 0,
+      "extracted": 20.0,
+      "expected": 20.0,
+      "correct": true,
+      "response_len": 557,
+      "is_original": false
+    },
+    "gsm8k_0334_v03_t0": {
+      "item_id": "gsm8k_0334_v03",
+      "trial": 0,
+      "extracted": 10.25,
+      "expected": 12.0,
+      "correct": false,
+      "response_len": 1126,
+      "is_original": false
+    },
+    "gsm8k_0334_v04_t0": {
+      "item_id": "gsm8k_0334_v04",
+      "trial": 0,
+      "extracted": 10.25,
+      "expected": 11.0,
+      "correct": false,
+      "response_len": 694,
+      "is_original": false
+    },
+    "gsm8k_0437_t0": {
+      "item_id": "gsm8k_0437",
+      "trial": 0,
+      "extracted": 7.0,
+      "expected": 7.0,
+      "correct": true,
+      "response_len": 550,
+      "is_original": true
+    },
+    "gsm8k_0437_v00_t0": {
+      "item_id": "gsm8k_0437_v00",
+      "trial": 0,
+      "extracted": 14.0,
+      "expected": 14.0,
+      "correct": true,
+      "response_len": 625,
+      "is_original": false
+    },
+    "gsm8k_0437_v01_t0": {
+      "item_id": "gsm8k_0437_v01",
+      "trial": 0,
+      "extracted": 11.0,
+      "expected": 11.0,
+      "correct": true,
+      "response_len": 659,
+      "is_original": false
+    },
+    "gsm8k_0437_v02_t0": {
+      "item_id": "gsm8k_0437_v02",
+      "trial": 0,
+      "extracted": 14.0,
+      "expected": 14.0,
+      "correct": true,
+      "response_len": 652,
+      "is_original": false
+    },
+    "gsm8k_0437_v03_t0": {
+      "item_id": "gsm8k_0437_v03",
+      "trial": 0,
+      "extracted": 9.0,
+      "expected": 9.0,
+      "correct": true,
+      "response_len": 535,
+      "is_original": false
+    },
+    "gsm8k_0437_v04_t0": {
+      "item_id": "gsm8k_0437_v04",
+      "trial": 0,
+      "extracted": 11.0,
+      "expected": 11.0,
+      "correct": true,
+      "response_len": 652,
+      "is_original": false
+    },
+    "gsm8k_1247_t0": {
+      "item_id": "gsm8k_1247",
+      "trial": 0,
+      "extracted": 7.0,
+      "expected": 7.0,
+      "correct": true,
+      "response_len": 431,
+      "is_original": true
+    },
+    "gsm8k_1247_v00_t0": {
+      "item_id": "gsm8k_1247_v00",
+      "trial": 0,
+      "extracted": 38.0,
+      "expected": 38.0,
+      "correct": true,
+      "response_len": 466,
+      "is_original": false
+    },
+    "gsm8k_1247_v01_t0": {
+      "item_id": "gsm8k_1247_v01",
+      "trial": 0,
+      "extracted": 24.0,
+      "expected": 24.0,
+      "correct": true,
+      "response_len": 466,
+      "is_original": false
+    },
+    "gsm8k_1247_v02_t0": {
+      "item_id": "gsm8k_1247_v02",
+      "trial": 0,
+      "extracted": 21.0,
+      "expected": 21.0,
+      "correct": true,
+      "response_len": 445,
+      "is_original": false
+    },
+    "gsm8k_1247_v03_t0": {
+      "item_id": "gsm8k_1247_v03",
+      "trial": 0,
+      "extracted": 39.0,
+      "expected": 39.0,
+      "correct": true,
+      "response_len": 466,
+      "is_original": false
+    },
+    "gsm8k_1247_v04_t0": {
+      "item_id": "gsm8k_1247_v04",
+      "trial": 0,
+      "extracted": 28.0,
+      "expected": 28.0,
+      "correct": true,
+      "response_len": 466,
+      "is_original": false
+    },
+    "gsm8k_1200_t0": {
+      "item_id": "gsm8k_1200",
+      "trial": 0,
+      "extracted": 8.0,
+      "expected": 8.0,
+      "correct": true,
+      "response_len": 511,
+      "is_original": true
+    },
+    "gsm8k_1200_v00_t0": {
+      "item_id": "gsm8k_1200_v00",
+      "trial": 0,
+      "extracted": 14.5,
+      "expected": 8.0,
+      "correct": false,
+      "response_len": 2291,
+      "is_original": false
+    },
+    "gsm8k_1200_v01_t0": {
+      "item_id": "gsm8k_1200_v01",
+      "trial": 0,
+      "extracted": 4.0,
+      "expected": 8.0,
+      "correct": false,
+      "response_len": 3132,
+      "is_original": false
+    },
+    "gsm8k_1200_v02_t0": {
+      "item_id": "gsm8k_1200_v02",
+      "trial": 0,
+      "extracted": 91.0,
+      "expected": 8.0,
+      "correct": false,
+      "response_len": 3133,
+      "is_original": false
+    },
+    "gsm8k_1200_v03_t0": {
+      "item_id": "gsm8k_1200_v03",
+      "trial": 0,
+      "extracted": 10.0,
+      "expected": 8.0,
+      "correct": false,
+      "response_len": 2468,
+      "is_original": false
+    },
+    "gsm8k_1200_v04_t0": {
+      "item_id": "gsm8k_1200_v04",
+      "trial": 0,
+      "extracted": null,
+      "expected": 8.0,
+      "correct": false,
+      "response_len": 3177,
+      "is_original": false
+    },
+    "gsm8k_0263_t0": {
+      "item_id": "gsm8k_0263",
+      "trial": 0,
+      "extracted": 8.0,
+      "expected": 8.0,
+      "correct": true,
+      "response_len": 651,
+      "is_original": true
+    },
+    "gsm8k_0263_v00_t0": {
+      "item_id": "gsm8k_0263_v00",
+      "trial": 0,
+      "extracted": 7.0,
+      "expected": 7.0,
+      "correct": true,
+      "response_len": 1514,
+      "is_original": false
+    },
+    "gsm8k_0263_v01_t0": {
+      "item_id": "gsm8k_0263_v01",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 10.0,
+      "correct": false,
+      "response_len": 3264,
+      "is_original": false
+    },
+    "gsm8k_0263_v02_t0": {
+      "item_id": "gsm8k_0263_v02",
+      "trial": 0,
+      "extracted": 9.0,
+      "expected": 7.0,
+      "correct": false,
+      "response_len": 2669,
+      "is_original": false
+    },
+    "gsm8k_0263_v03_t0": {
+      "item_id": "gsm8k_0263_v03",
+      "trial": 0,
+      "extracted": 2.0,
+      "expected": 7.0,
+      "correct": false,
+      "response_len": 2648,
+      "is_original": false
+    },
+    "gsm8k_0263_v04_t0": {
+      "item_id": "gsm8k_0263_v04",
+      "trial": 0,
+      "extracted": 3.0,
+      "expected": 9.0,
+      "correct": false,
+      "response_len": 2761,
+      "is_original": false
+    }
+  }
+}
