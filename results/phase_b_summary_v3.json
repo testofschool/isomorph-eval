@@ -1,0 +1,88 @@
+{
+  "evaluation": "Phase B T=1 (100-item stratified subset)",
+  "date": "2026-05-11",
+  "dataset": "eval_subset_100.json",
+  "trials": 1,
+  "temperature": 0.0,
+  "models": {
+    "Llama 3.1 8B": {
+      "n_results": 580,
+      "n_items": 100,
+      "complete": true,
+      "acc_original": 0.92,
+      "acc_isomorphic": 0.5031666666666667,
+      "delta_raw": 0.4168333333333334,
+      "se_delta": 0.04703169824416975,
+      "ci_95": [
+        0.32465120477476067,
+        0.509015461891906
+      ],
+      "boot_ci_95": [
+        0.3233333333333333,
+        0.5070083333333332
+      ],
+      "p_value": 9.445903604849082e-11,
+      "delta_irt": 0.9146831927122326,
+      "n_flagged": 43,
+      "archetype": "PURE_MEMORIZER"
+    },
+    "Llama 4 Scout 17B": {
+      "n_results": 580,
+      "n_items": 100,
+      "complete": true,
+      "acc_original": 0.94,
+      "acc_isomorphic": 0.538,
+      "delta_raw": 0.4019999999999999,
+      "se_delta": 0.04981237524223,
+      "ci_95": [
+        0.30436774452522913,
+        0.4996322554747707
+      ],
+      "boot_ci_95": [
+        0.3059875,
+        0.49699999999999994
+      ],
+      "p_value": 2.3779591557755797e-10,
+      "delta_irt": 0.9611786362566691,
+      "n_flagged": 43,
+      "archetype": "PURE_MEMORIZER"
+    },
+    "Qwen3 32B": {
+      "n_results": 234,
+      "n_items": 41,
+      "complete": false,
+      "acc_original": 0.6341463414634146,
+      "acc_isomorphic": 0.2548780487804878,
+      "delta_raw": 0.37926829268292683,
+      "se_delta": 0.08368377632485346,
+      "ci_95": [
+        0.21524809108621404,
+        0.5432884942796397
+      ],
+      "boot_ci_95": [
+        0.21951219512195122,
+        0.5365853658536586
+      ],
+      "p_value": 7.423283377306115e-05,
+      "delta_irt": 0.8224579310520173,
+      "n_flagged": 19,
+      "archetype": "PURE_MEMORIZER"
+    },
+    "Llama 3.3 70B": {
+      "n_results": 2,
+      "status": "TPD_LIMITED",
+      "note": "Needs --resume after daily token limit resets"
+    },
+    "GPT-OSS 120B": {
+      "n_results": 16,
+      "status": "TPD_LIMITED",
+      "note": "Needs --resume after daily token limit resets"
+    }
+  },
+  "validation": {
+    "all_files_exist": true,
+    "all_extraction_above_80": true,
+    "models_with_sig_contamination": 3,
+    "gpt_oss_delta_check": "INSUFFICIENT_DATA (only 16 items)"
+  }
+}

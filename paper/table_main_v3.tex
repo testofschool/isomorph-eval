@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Empirical contamination diagnostics on 100 stratified GSM8K items (T=1, temp=0.0). $\Delta_{\mathrm{raw}}$ with clustered bootstrap 95\% CIs (10{,}000 resamples). $\Delta_{\mathrm{IRT}}$: variance-weighted proxy for IRT discrimination. Wilcoxon signed-rank one-sided $p$-values.}
+\label{tab:main}
+\begin{tabular}{lcccccccc}
+\toprule
+Model & $N$ & Acc$_{\mathrm{orig}}$ & Acc$_{\mathrm{iso}}$ & $\Delta_{\mathrm{raw}}$ [95\% CI] & $p$ & $\Delta_{\mathrm{IRT}}$ & Extr\% & Archetype \\
+\midrule
+Llama 3.1 8B & 100 & 92.0\% & 50.3\% & $+0.417\;[+0.323,\,+0.506]$ & $<$0.001$^{***}$ & $+0.915$ & 100/99 & \textsc{Mem} \\
+Llama 4 Scout 17B & 100 & 94.0\% & 53.8\% & $+0.402\;[+0.306,\,+0.498]$ & $<$0.001$^{***}$ & $+0.961$ & 96/95 & \textsc{Mem} \\
+Qwen3 32B$^\dagger$ & 42 & 61.9\% & 24.9\% & $+0.370\;[+0.212,\,+0.527]$ & $<$0.001$^{***}$ & $+0.822$ & 100/89 & \textsc{Mem} \\
+\bottomrule
+\end{tabular}
+\vspace{1mm}
+{\footnotesize $^\dagger$Partial evaluation (API daily token limit). Extr\%: answer extraction rate (orig/var).}
+\end{table}

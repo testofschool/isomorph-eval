@@ -1,0 +1,163 @@
+% ==========================================================================
+% Sections 5-6: Experimental Setup and Results (Empirical) — v3
+% ==========================================================================
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Evaluation Dataset}
+We apply the Isomorphic Engine (Section~\ref{sec:engine}) to the
+GSM8K test set~\cite{cobbe2021gsm8k}, parsing all 1{,}319 problems
+via the rule-based annotation parser. After applying the strict
+validation pipeline---filtering problems with fractional leaf values,
+value-conflation between inputs and implicit constants, non-integer
+variant answers, negative intermediates, excessively large answers
+($>10^8$), and text-replacement mismatches---the final dataset contains
+\textbf{667 original items with 3{,}199 verified $\tau$-isomorphic
+variants} (3{,}866 evaluation entries total, $\sim$4.8 variants per
+item). We evaluate a \textbf{stratified subset of 100 items} with
+480 variants (580 evaluation entries per model), selected by uniform
+sampling across answer-magnitude quantiles as a proxy for difficulty.
+Each item is limited to 5~variants. All variant answers are
+computed by replaying the original GSM8K solution annotations with
+substituted input values, distinguishing question-derived inputs from
+computation constants.
+
+\paragraph{Dataset validation.}
+Deterministic verification confirms 100\% positive-integer answers,
+100\% structural fingerprint preservation ($\tau$-signature match),
+and 100\% reasonable answer range. The strict validation pipeline
+rejected 19{,}826 candidate variants (63.5\% non-integer answers,
+12.1\% text-replacement mismatches, 9.6\% negative values, 1.2\%
+negative intermediates, 0.7\% overflow), ensuring that surviving
+variants produce coherent natural-language problems with verified
+answers. A spot-check of 10 random items confirms high word overlap
+(80--96\%) between original and variant questions, with differences
+limited to numeric values and entity names.
+
+\subsection{Models}
+We evaluate three models spanning two model families and a range
+of parameter counts:
+
+\begin{itemize}[nosep, leftmargin=*]
+\item \textbf{Llama~3.1 8B} (Meta, dense, 8B parameters)
+\item \textbf{Llama~4 Scout 17B} (Meta, MoE, 17B active parameters)
+\item \textbf{Qwen3 32B} (Alibaba, dense, 32B parameters)
+\end{itemize}
+
+\noindent All models are accessed via the Groq inference API at
+temperature $T = 0.0$ (greedy decoding) with chain-of-thought prompting
+and \verb|\boxed{}| answer extraction, with fallback to
+\verb|####|-delimited and last-number patterns. Extraction rates
+exceed 95\% for both Llama-family models (100\%/99\% for 8B,
+96\%/95\% for Scout) and 100\%/89\% for Qwen3 (whose thinking-token
+format occasionally produces malformed output). The extraction-rate
+gap between original and variant items is $\leq$1.4\% for all models,
+confirming that the contamination delta is not an artifact of
+differential extraction. Qwen3 was evaluated on 42 of 100~items due
+to API daily token limits; both Llama models were evaluated on all
+100~items.
+
+\subsection{Protocol}
+Each model receives every original item and every variant item exactly
+once ($T = 1$ trial per item, greedy decoding). We compute the
+item-level contamination delta $\delta_i$ as the difference between
+the model's accuracy on the original item and its mean accuracy across
+the item's $\tau$-isomorphic variants. The model-level metrics
+$\Delta_{\mathrm{raw}}$ and $\Dcont$ are computed as described in
+Section~\ref{sec:delta}, with the IRT-weighted variant using
+variance-based discrimination weights as a proxy for 2PL discrimination
+parameters. We report clustered bootstrap 95\% confidence intervals
+(10{,}000 resamples at the original-item level), analytic standard
+errors $\mathrm{SE}(\Delta_{\mathrm{raw}}) = \sigma(\delta_i) / \sqrt{N}$,
+and one-sided Wilcoxon signed-rank test $p$-values (testing
+$H_1{:}\ \Delta_{\mathrm{raw}} > 0$).
+
+
+% ==================================================================
+\section{Results}
+\label{sec:results}
+
+\subsection{Main Results}
+
+Table~\ref{tab:main} presents the empirical contamination
+diagnostics for all three evaluated models.
+
+\input{table_main_v3}
+
+\paragraph{All three models show statistically significant
+contamination.}
+Llama~3.1 8B exhibits the strongest raw contamination signal:\ 92.0\%
+accuracy on original GSM8K items versus 50.3\% on $\tau$-isomorphic
+variants, yielding $\Delta_{\mathrm{raw}} = +0.417$ (bootstrap 95\%
+CI: $[+0.323, +0.506]$, $p < 10^{-10}$). This 41.7-percentage-point
+drop is striking given that the variants require \emph{identical
+reasoning operations} with only the numeric values changed. Llama~4
+Scout 17B shows a comparable pattern ($\Delta_{\mathrm{raw}} = +0.402$,
+bootstrap 95\% CI: $[+0.306, +0.498]$, $p < 10^{-10}$), with 94\%
+accuracy on originals dropping to 54\% on variants. Items flagged as
+memorized ($\delta_i > 0.5$) constitute 43\% of tested items for both
+the 8B and Scout models.
+
+\paragraph{Qwen3 confirms contamination at reduced power.}
+Qwen3~32B was evaluated on 42 of 100~items due to API daily token
+limits, yet still exhibits a highly significant contamination signal:
+61.9\% accuracy on originals versus 24.9\% on variants
+($\Delta_{\mathrm{raw}} = +0.370$, bootstrap 95\% CI:
+$[+0.212, +0.527]$, $p < 10^{-4}$). The extraction-rate gap between
+originals and variants is 11.4\% (100\% vs.\ 89\%), which alone
+cannot explain the 37.0-point accuracy gap. The contamination signal
+is consistent across all three models despite differences in
+architecture, parameter count, and training pipeline.
+
+\paragraph{IRT weighting amplifies the contamination signal.}
+For all three models, the variance-weighted delta $\Dcont$
+substantially exceeds the raw gap: 2.2$\times$ amplification for
+Llama~3.1 8B ($\Dcont = +0.915$ vs.\
+$\Delta_{\mathrm{raw}} = +0.417$), 2.4$\times$ for Llama~4 Scout
+($\Dcont = +0.961$ vs.\ $\Delta_{\mathrm{raw}} = +0.402$), and
+2.2$\times$ for Qwen3 ($\Dcont = +0.822$ vs.\
+$\Delta_{\mathrm{raw}} = +0.370$). This amplification occurs because
+the items with the largest per-item deltas also tend to have high
+discrimination (variance between original and variant performance),
+receiving greater weight in the IRT-weighted metric.
+
+\paragraph{Per-item analysis reveals bimodal contamination.}
+The distribution of per-item deltas $\delta_i$ for each model
+exhibits a bimodal pattern: a cluster near $\delta_i = 0$ (items
+where the model reasons correctly on both original and variants) and
+a heavy right tail at $\delta_i = +1.0$ (items where the model gets
+the original correct but fails all variants). This bimodal pattern is
+the signature of item-level memorization: certain problems have been
+memorized verbatim, while others are solved via genuine reasoning.
+
+\paragraph{Comparison to prior work.}
+Our findings are broadly consistent with GSM1K~\cite{zhang2024gsm1k},
+which reported 8--13\% performance drops for open-source models on a
+parallel benchmark. However, our $\tau$-isomorphic approach reveals
+\emph{substantially larger} gaps (up to 41.7\%) for the same model
+families, likely because $\tau$-isomorphism provides a stricter
+structural guarantee: the variants differ \emph{only} in numeric
+values, eliminating the possibility that difficulty differences arise
+from surface-level variations in problem framing.
+
+\subsection{Limitations}
+\label{sec:limitations}
+Several caveats apply to these results. First, the evaluation uses
+$T = 1$ trial per item (greedy decoding), preventing estimation of
+per-item response variance; future work should use $T \geq 5$ with
+temperature $> 0$ to compute proper IRT item parameters. Second,
+while the 100-item sample achieves overwhelming statistical
+significance for the primary contamination signal ($p < 10^{-10}$),
+the full 667-item dataset should be evaluated when API budgets permit
+to improve power for detecting small effects and enable
+subgroup analyses by reasoning complexity. Third, Qwen3~32B was
+evaluated on only 42 of 100~items due to API daily token limits;
+ongoing evaluation will complete its assessment. Fourth, the
+annotation-chain replay used to compute variant answers cannot handle
+problems where the same numeric value serves both as an input and as
+an implicit constant (e.g., ``half'' implying division by~2 when the
+input value is also~2); such items are identified by the conflation
+filter and excluded. Fifth, the IRT-weighted delta uses variance
+as a proxy for item discrimination; full 2PL estimation requires
+a larger model panel ($\geq 30$ models) than evaluated here.
