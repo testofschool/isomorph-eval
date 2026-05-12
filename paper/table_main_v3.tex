@@ -1,19 +1,19 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Contamination diagnostics on verified-clean GSM8K items ($T=1$, temp=0.0). All variant answers independently verified via multi-model consensus. $\Delta_{\mathrm{raw}}$ with clustered bootstrap 95\% CIs (10{,}000 resamples). Wilcoxon signed-rank one-sided $p$-values.}
+\caption{Isomorphic delta on verified GSM8K items ($N=69$: 59 verified-clean + 10 regenerated with fixed pipeline; $T=1$, temp=0.0). $\Delta_{\mathrm{iso}}$ with clustered bootstrap 95\% CIs (10{,}000 resamples). Paired $t$-test $p$-values.}
 \label{tab:main}
-\begin{tabular}{lccccccc}
+\begin{tabular}{lcccccc}
 \toprule
-Model & $N$ & Acc$_{\mathrm{orig}}$ & Acc$_{\mathrm{iso}}$ & $\Delta_{\mathrm{raw}}$ [95\% CI] & $p$ & Extr\% & Archetype \\
+Model & $N$ & Acc$_{\mathrm{orig}}$ & Acc$_{\mathrm{iso}}$ & $\Delta_{\mathrm{iso}}$ [95\% CI] & $p$ & Archetype \\
 \midrule
-Llama 3.1 8B & 59 & 94.9\% & 82.3\% & $+0.126\;[+0.051,\,+0.202]$ & $0.002^{**}$ & 100/99 & \textsc{Mild} \\
-Llama 4 Scout 17B & 59 & 93.2\% & 88.3\% & $+0.049\;[-0.014,\,+0.113]$ & $0.169$ & 95/94 & \textsc{Inv} \\
-Qwen3 32B$^\dagger$ & 38 & 100.0\% & 93.4\% & $+0.066\;[+0.011,\,+0.137]$ & $0.060$ & 100/99 & \textsc{Inv} \\
-GPT-OSS 120B$^\dagger$ & 12 & 100.0\% & 94.7\% & $+0.053\;[+0.000,\,+0.133]$ & $0.174$ & 100/97 & \textsc{Inv} \\
-Llama 3.3 70B$^\dagger$ & 8 & 100.0\% & 94.6\% & $+0.054\;[+0.000,\,+0.150]$ & $0.321$ & 100/100 & \textsc{Inv} \\
+Llama 3.1 8B & 69 & 95.7\% & 84.4\% & $+0.113\;[+0.049,\,+0.180]$ & $0.001^{**}$ & \textsc{Mild} \\
+Llama 4 Scout 17B & 69 & 94.2\% & 90.1\% & $+0.041\;[-0.011,\,+0.099]$ & $0.169$ & \textsc{Inv} \\
+Qwen3 32B$^\dagger$ & 45 & 100.0\% & 94.0\% & $+0.060\;[+0.009,\,+0.120]$ & $0.044^{*}$ & \textsc{Mild} \\
+GPT-OSS 120B$^\dagger$ & 13 & 100.0\% & 95.2\% & $+0.048\;[+0.000,\,+0.123]$ & $0.174$ & \textsc{Inv} \\
+Llama 3.3 70B$^\dagger$ & 9 & 100.0\% & 95.2\% & $+0.048\;[+0.000,\,+0.133]$ & $0.320$ & \textsc{Inv} \\
 \bottomrule
 \end{tabular}
 \vspace{1mm}
-{\footnotesize $^\dagger$Partial evaluation (API daily token limit). Extr\%: answer extraction rate (orig/var). \textsc{Inv}: invariant ($p > 0.05$). \textsc{Mild}: mild gap ($p < 0.05$, $\Delta < 0.15$).}
+{\footnotesize $^\dagger$Partial evaluation (API daily token limit). \textsc{Inv}: invariant ($p > 0.05$). \textsc{Mild}: mild gap ($p < 0.05$, $\Delta < 0.15$). GPT-OSS 120B is the negative control (no GSM8K in training data).}
 \end{table}

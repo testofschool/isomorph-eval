@@ -1,246 +1,144 @@
 % ==========================================================================
-% DELIVERABLE 2: COMPLETE PAPER OUTLINE (Sections 1-8)
-%
-% Title: Isomorph-Eval: Separating Reasoning from Recall in LLM Evaluation
-%        via Structurally Equivalent Benchmarks and Item Response Theory
-%
-% Target: NeurIPS 2027 Evaluations & Datasets Track
-% ==========================================================================
-%
-% OUTLINE SUMMARY
-%
-% Section 1: Introduction (1.5 pages) — FULL TEXT BELOW
-%
-% Section 2: Related Work (1.5 pages)
-%   2.1 Benchmark Contamination Detection
-%       GSM1K [Zhang NeurIPS D&B 2024]: parallel benchmark, 8-13% drops.
-%       ConStat [Dekoninck NeurIPS 2024]: statistical test + reference models.
-%       MMLU-CF [2024]: closed contamination-free MMLU variant.
-%       PaCoST [2024]: paired confidence testing (needs model internals).
-%   2.2 Living / Dynamic Benchmarks
-%       LiveBench [White ICLR 2025 Spotlight]: monthly-updated questions.
-%       FrontierMath [Glazer 2024]: expert-curated hard math.
-%       EternalMath [2026]: living benchmark from new theorems.
-%       Key gap: all create NEW benchmarks, none generate isomorphs of EXISTING ones.
-%   2.3 IRT for LLM Evaluation
-%       Rodriguez [ACL 2021], Polo [ICML 2024], Zhou PSN-IRT [AAAI 2026 Oral],
-%       Singhal MEDIRT [2025], Uebayashi M3IRT [2026], LaRT [2025].
-%       Key gap: all fix aggregation, none address contamination.
-%   2.4 Evaluation Failure Scaling Law
-%       Our prior work [Kang 2026]: S x D interaction, gamma_3 = +0.199.
-%       This paper adds the third axis: contamination C.
-%   Feature comparison table: 7 dimensions x 5 methods.
-%
-% Section 3: Background and Notation (0.75 pages)
-%   3.1 2PL Item Response Theory (model, estimation, missing data)
-%   3.2 Differential Item Functioning (DIF) — the psychometric bridge
-%   3.3 EFSL recap: 1 - rho = gamma_0 + gamma_1*S + gamma_2*D + gamma_3*S*D
-%
-% Section 4: The Isomorph-Eval Framework (2.5 pages)
-%   4.1 Task Isomorphism (Definitions 1-2, Conjecture 1)
-%   4.2 The Isomorphic Engine (Parser -> Mutator -> Generator -> Verifier)
-%   4.3 The Contamination Delta (Definitions 3-6, hypothesis test)
-%   4.4 Diagnostic Archetypes (4 types, threshold table)
-%   4.5 The Three-Body Problem: 1 - rho = f(S, D, C)
-%
-% Section 5: Experimental Setup (1 page)
-%   5.1 Dataset: GSM8K (667 problems x 5 variants = 3,866 items; 100-item stratified subset)
-%   5.2 Models: Llama-3.1-8B, Llama-4-Scout-17B, Qwen3-32B
-%   5.3 Protocol: T=1 trial, temp=0.0, CoT prompt, boxed extraction, bootstrap CIs
-%   5.4 Baselines: raw accuracy gap (GSM1K), our IRT-weighted
-%
-% Section 6: Results (2 pages)
-%   6.1 Main Results — Table + Figure 1 (diagnostic bar chart)
-%   6.2 Three-Body Surface — Figure 2 (4-panel contour/bar)
-%   6.3 Per-Item DIF Analysis — which items are memorized?
-%   6.4 Reasoning Structure Hypothesis validation — b_orig vs b_iso correlation
-%
-% Section 7: Discussion (1 page)
-%   7.1 Limitations (parser coverage, surface effects, domain scope)
-%   7.2 The Goodhart Problem (Archetype 4: Latent Contaminator)
-%   7.3 Implications (leaderboards, regulation, infrastructure)
-%   7.4 Connection to EFSL (the unified theory)
-%
-% Section 8: Conclusion (0.5 pages)
-%   Summary, open-source release, future work (logic, code, Physical AI)
-%
-% ==========================================================================
-
-
-% ==========================================================================
-% DELIVERABLE 3: FULL INTRODUCTION TEXT (Section 1)
-%
-% Ready to copy-paste into any NeurIPS LaTeX template.
+% Section 1: Introduction — Reframed for methodology + cautionary finding
 % ==========================================================================
 
 \section{Introduction}
 
-The credibility of AI evaluation depends on two premises that are
-increasingly difficult to defend. The first is that benchmark items have
-not leaked into training data. The second is that aggregating scores by
-simple averaging produces rankings that faithfully reflect true system
-capability. A growing body of evidence suggests that both premises are
-violated in practice, and that the violations interact in ways that are
-worse than either alone.
+Benchmark contamination---the presence of test items in training
+data---is widely suspected of inflating LLM performance on standard
+evaluations~\cite{zhang2024gsm1k,dekoninck2024constat,mmlucf2024}.
+The standard remedy is to generate novel benchmark variants that test
+the same reasoning while eliminating memorization advantages. But a
+critical question has received insufficient attention: \emph{how do we
+know the variant answers are correct?}
 
-\paragraph{The contamination crisis.}
-Test set contamination---the inadvertent or deliberate inclusion of
-benchmark items in training corpora---has emerged as a fundamental threat
-to evaluation integrity. Zhang et al.~\cite{zhang2024gsm1k} constructed
-GSM1K, a parallel benchmark to GSM8K, and found that several prominent
-open-source models exhibited performance drops of 8--13\%, with some
-models showing near-perfect accuracy on original items while failing on
-structurally similar but previously unseen variants. Dekoninck et
-al.~\cite{dekoninck2024constat} proposed ConStat, a statistical test
-that flags contamination via performance gaps on rephrased items, using
-reference models as calibration anchors. Concurrently, MMLU-CF
-\cite{mmlucf2024} demonstrated that GPT-4o's score drops from 88.0\% on
-the original MMLU to 73.4\% on a contamination-free variant---a 14.6
-percentage-point gap that cannot be attributed to task difficulty alone.
-These findings indicate that a non-trivial fraction of the performance
-gains reported on widely-used benchmarks may reflect memorization rather
-than generalization.
+We present \textbf{Isomorph-Eval}, a framework for generating
+structurally equivalent benchmark variants via $\tau$-isomorphism, a
+graph-theoretic definition of structural equivalence. In applying
+the framework to GSM8K~\cite{cobbe2021gsm8k}, we discovered that the
+standard approach to computing variant answers---annotation-chain
+replay, in which new values are substituted into the original
+solution chain---produces systematically wrong answers in 41\% of
+items. These errors created an apparent contamination signal of
+$\Delta \approx +0.42$ that was \emph{uniform across all models},
+including a negative control with no GSM8K in its training data.
+After independent verification and pipeline repair, the signal
+collapsed to $\Delta \approx +0.04$--$0.11$.
 
-\paragraph{The aggregation crisis.}
-Independently, the methodology by which benchmark scores are aggregated
-has received increasing scrutiny. In prior work, we introduced the
-\emph{Evaluation Failure Scaling Law} (EFSL)~\cite{kang2026efsl},
-demonstrating through controlled cross-domain simulations that Spearman
-rank correlation between simple-average rankings and ground-truth
-rankings degrades from $\rho = 1.000$ to $\rho = 0.242$ as the product
-of data sparsity $S$ and item difficulty gap $D$ increases under biased
-missingness. A 150-condition grid sweep confirmed a strong and
-statistically significant $S \times D$ interaction
-($\gamma_3 = +0.199$, $t = 13.05$), while two-parameter logistic (2PL)
-Item Response Theory (IRT) maintained $\rho \geq 0.993$ across all
-conditions. Concurrently, Zhou et al.~\cite{zhou2026psnirt} conducted
-the most comprehensive IRT analysis of LLM benchmarks to date, revealing
-significant quality shortcomings across 11 benchmarks comprising 41,871
-items; Singhal et al.~\cite{singhal2025medirt} showed that IRT-based
-rankings outperform accuracy-based rankings across six external medical
-benchmarks; and recent work on latency-aware IRT~\cite{lart2025}
-extended the framework to jointly model response time and accuracy.
+This finding motivates a reframing: the primary contribution of this
+work is not contamination detection, but rather the identification of
+seven bug classes in variant generation pipelines that produce false
+contamination signals, and the development of verification methods
+that prevent them.
 
-\paragraph{The compound failure.}
-While each crisis has received individual attention, no prior work has
-examined their joint interaction. We identify what we term the
-\emph{Three-Body Problem of AI evaluation}: the compound failure that
-arises when data sparsity, item difficulty heterogeneity, and benchmark
-contamination co-occur. Consider a concrete scenario: an open-source
-model has memorized 15\% of GSM8K through training data leakage and is
-evaluated on a sparse subset of items (60\% coverage) that
-disproportionately includes the easy items it has memorized. Its simple
-average score is inflated by all three mechanisms simultaneously: (1)
-sparsity prevents the evaluation from sampling its failure modes; (2)
-difficulty bias means the tested items are disproportionately easy; (3)
-contamination means even the correctly-tested items receive a
-memorization boost. The resulting ranking is not merely noisy---it is
-\emph{systematically} biased in a direction that rewards contaminated
-models evaluated under favorable conditions.
+\paragraph{Background.}
+Prior work on benchmark contamination detection falls into two
+categories. \emph{Parallel benchmark} approaches construct entirely
+new test sets: GSM1K~\cite{zhang2024gsm1k} reported 8--13\% performance
+drops for open-source models on a manually curated GSM8K parallel;
+MMLU-CF~\cite{mmlucf2024} found a 14.6-point drop for GPT-4o on a
+contamination-free MMLU variant. \emph{Statistical detection} approaches
+such as ConStat~\cite{dekoninck2024constat} and
+PaCoST use performance gaps on rephrased items as contamination evidence.
+A complementary line of work has established that benchmark scores
+are also distorted by aggregation methodology: our prior Evaluation
+Failure Scaling Law (EFSL)~\cite{kang2026efsl} showed that simple
+averaging degrades to $\rho = 0.24$ under the joint effect of data
+sparsity and item difficulty heterogeneity, while
+PSN-IRT~\cite{zhou2026psnirt} and MedIRT~\cite{singhal2025medirt}
+demonstrated that IRT-based rankings are more robust.
 
-IRT alone corrects for (1) and (2) but not (3), because it cannot
-distinguish genuine ability from contamination-inflated performance on
-the same items. Contamination detection alone (GSM1K, ConStat) addresses
-(3) but provides no correction for (1) and (2), and its difficulty
-adjustment relies on generic regression rather than the formal item
-parameter structure that IRT provides. Neither approach alone solves the
-compound problem.
+All of these approaches assume that the alternative evaluation---whether
+a parallel benchmark or a rephrased variant---has correct answers. None
+systematically verify this assumption. GSM-Symbolic~\cite{mirzadeh2024gsmsymbolic}
+comes closest, substituting symbolic values into GSM8K solution
+templates, but reports a 5--15 percentage-point baseline difficulty
+increase from numeric perturbation alone, making it difficult to
+separate perturbation sensitivity from contamination.
 
-\paragraph{This paper: Isomorph-Eval.}
-We present \textbf{Isomorph-Eval}, a unified framework that addresses
-all three failure axes simultaneously. The framework consists of three
-components:
-
-\begin{enumerate}[leftmargin=*, nosep]
-\item \textbf{$\boldsymbol{\tau}$-isomorphism} (Section~4.1): a
-graph-theoretic definition of structural equivalence between benchmark
-items. Two items are $\tau$-isomorphic if there exists a graph
+\paragraph{$\tau$-Isomorphism.}
+We formalize the concept of structural equivalence as
+\emph{$\tau$-isomorphism} (Section~\ref{sec:isomorphism}): two
+benchmark items are $\tau$-isomorphic if there exists a graph
 isomorphism between their reasoning graphs that preserves operation
-types, dependency structure, and complexity weights, while ensuring
-complete surface novelty. Unlike prior rephrasing approaches that rely
-on semantic similarity heuristics, $\tau$-isomorphism is verified
-through a deterministic structural comparison, ensuring that generated
-variants test identical cognitive operations with known-correct answers.
+types, dependency structure, and complexity weights. Unlike semantic
+similarity heuristics used by prior rephrasing approaches,
+$\tau$-isomorphism is a deterministic, verifiable structural condition.
+The \emph{Isomorphic Engine} (Section~\ref{sec:engine}) implements a
+four-stage pipeline (Parser $\to$ Mutator $\to$ Generator $\to$
+Verifier) that automatically produces verified $\tau$-isomorphic
+variants with answers computed by forward graph execution.
 
-\item \textbf{The Isomorphic Engine} (Section~4.2): an open-source
-pipeline that automatically generates unlimited verified
-$\tau$-isomorphic variants of any binary-scored benchmark item. The
-engine decomposes items into reasoning graphs via a hybrid rule-based
-and LLM-structured parser (achieving 57\% coverage on GSM8K with
-zero LLM calls, and approximately 88\% with structured extraction),
-mutates entity and value bindings while locking structural invariants,
-and verifies output fidelity through round-trip re-parsing. A key
-architectural contribution is the \emph{template-first surface
-generator}, in which the LLM functions exclusively as a surface
-realizer---never as a reasoner---with its output validated by forward
-graph execution.
-
-\item \textbf{The Contamination Delta}
-$\boldsymbol{\Delta_{\mathrm{contam}}^{\mathrm{IRT}}}$ (Section~4.3):
-an IRT-grounded diagnostic metric that quantifies memorization by
-comparing model performance on original items versus isomorphic
-variants, weighted by item discrimination parameters estimated from
-clean (isomorphic) data. Grounded in the psychometric framework of
-Differential Item Functioning (DIF)~\cite{lord1980,holland1993}, the
-metric provides per-item Wald tests with Bonferroni-corrected confidence
-intervals and a global likelihood ratio test, classifying models into
-four diagnostic archetypes: \emph{Robust Reasoner}, \emph{Pure
-Memorizer}, \emph{Syntactic Matcher}, and \emph{Latent Contaminator}.
-In controlled simulations, the IRT-weighted delta is 23$\times$ more
-discriminative than the raw accuracy gap used by prior methods.
-Empirical evaluation on five LLMs (including a negative control with
-no GSM8K in its training data) on 59 verified-clean GSM8K items shows
-that four of five models exhibit no significant contamination
-($\Delta_{\mathrm{raw}} \in [+0.049, +0.066]$, all $p > 0.05$),
-while Llama~3.1 8B shows a mild gap ($\Delta_{\mathrm{raw}} = +0.126$,
-$p = 0.002$). Critically, the framework also uncovered a data quality
-confound in annotation-chain replay that inflated apparent
-contamination signals uniformly across all models, demonstrating the
-importance of independent answer verification in benchmark construction.
+\paragraph{The cautionary finding.}
+Applying the Isomorphic Engine to a stratified sample of 100 GSM8K
+items, we found that annotation-chain replay---the mechanism that
+computes variant answers by substituting new values into the
+original solution annotations---fails in three systematic ways:
+\begin{enumerate}[leftmargin=*, nosep]
+\item \textbf{Value conflation}: the same numeric value serves
+multiple semantic roles in the problem (e.g., ``5 cars'' and
+``\$5 each''), but the solution chain merges them into a single
+graph node; mutating the node changes both uses in the graph but only
+one in the text.
+\item \textbf{Phantom leaf values}: the solution chain introduces
+intermediate results as leaf nodes (e.g., \texttt{<<40=40>>}) that
+do not appear in the question text; mutating these phantom values
+produces wrong answers because the graph is structurally incomplete.
+\item \textbf{Positional replacement collisions}: sequential text
+replacement causes new values to shadow old values of other nodes,
+producing text that does not match the graph computation.
 \end{enumerate}
+These three failure modes, along with four additional bug classes
+(magnitude inflation, answer invariance, partial name replacement,
+and node reuse), produced wrong variant answers in 41 of 100~items.
+All five evaluated models---including a negative control---appeared
+uniformly ``contaminated'' ($\Delta \approx +0.42$) because they were
+penalized for \emph{correctly solving} variants whose expected answers
+were wrong.
 
-\paragraph{The unified theory.}
-Isomorph-Eval extends our prior work on the Evaluation Failure Scaling
-Law~\cite{kang2026efsl} by adding contamination as a third axis of the
-failure surface. Where EFSL established that
-$1 - \rho_{\mathrm{avg}} = f(S, D)$ with a strong $S \times D$
-interaction, we show that the full model is
-$1 - \rho = f(S, D, C)$, where $C$ measures differential contamination
-across models. The EFSL provides the correction mechanism for $S$ and
-$D$ (2PL IRT estimation); Isomorph-Eval provides the correction
-mechanism for $C$ (isomorphic items with verified structural
-equivalence). Together, they constitute what we believe to be the first
-unified framework for fair AI evaluation under the joint presence of
-data sparsity, difficulty heterogeneity, and benchmark contamination.
+\paragraph{Corrected results.}
+After fixing the generation pipeline and independently verifying all
+variant answers via forward graph execution, we evaluate five LLMs on
+69 verified items (59 verified-clean + 10 regenerated with the fixed
+pipeline). Three of five models show no significant performance gap
+between originals and variants
+($\Delta_{\mathrm{iso}} \in [+0.041, +0.048]$, all $p > 0.05$).
+The two remaining models show mild gaps: Llama~3.1~8B
+($\Delta_{\mathrm{iso}} = +0.113$, $p = 0.001$) and Qwen3~32B
+($\Delta_{\mathrm{iso}} = +0.060$, $p = 0.044$), both consistent
+with the 5--15 percentage-point numeric perturbation sensitivity
+reported by GSM-Symbolic~\cite{mirzadeh2024gsmsymbolic}. The
+negative control (GPT-OSS~120B,
+$\Delta = +0.048$, $p = 0.174$) confirms that $\tau$-isomorphic
+variants are not systematically harder.
 
 \paragraph{Contributions.}
-Our contributions are as follows:
-
 \begin{enumerate}[leftmargin=*, nosep]
-\item We formalize $\tau$-isomorphism as a verifiable graph-theoretic
-condition for benchmark item equivalence, grounding the concept of
-``structurally identical problem'' in operation-type and
-complexity-weight preservation over reasoning graphs.
+\item We formalize \emph{$\tau$-isomorphism} as a verifiable
+graph-theoretic condition for benchmark item equivalence
+(Section~\ref{sec:isomorphism}).
 
-\item We design and release the Isomorphic Engine, a four-stage pipeline
-(Parser $\to$ Mutator $\to$ Generator $\to$ Verifier) that produces
-unlimited novel benchmark variants with automatically computed answers
-and deterministic structural verification.
+\item We design and release the \emph{Isomorphic Engine}, a
+four-stage pipeline that produces unlimited verified variants with
+automatically computed answers and deterministic structural
+verification (Section~\ref{sec:engine}).
 
-\item We define
-$\Delta_{\mathrm{contam}}^{\mathrm{IRT}}$, an IRT-weighted
-contamination metric grounded in the DIF framework, and demonstrate its
-superior discriminative power over raw accuracy gaps.
+\item We identify \textbf{seven bug classes} in annotation-chain
+replay that produce false contamination signals, and demonstrate that
+\emph{independent answer verification via forward graph execution} is
+necessary for any benchmark variant generation framework
+(Section~\ref{sec:audit}).
 
-\item We identify the Three-Body Problem of AI evaluation and show that
-the compound interaction of sparsity, difficulty heterogeneity, and
-contamination produces ranking failures that neither IRT alone nor
-contamination detection alone can correct---but that the unified
-framework recovers.
+\item We provide empirical evidence that on verified data, current
+LLMs show robust reasoning transfer to novel numeric contexts, with
+remaining gaps consistent with perturbation sensitivity rather than
+contamination (Section~\ref{sec:results}).
+
+\item We define $\Delta_{\mathrm{iso}}^{\mathrm{IRT}}$, a
+DIF-based metric for measuring perturbation sensitivity with IRT
+discrimination weighting (Section~\ref{sec:delta}).
 \end{enumerate}
 
-\noindent We release the complete pipeline---parser, mutator, generator,
-verifier, contamination metric, and evaluation runner---as open-source
-software requiring only NumPy, SciPy, and a standard Python
-environment.\footnote{Code and data:
+\noindent We release the complete pipeline as open-source
+software.\footnote{Code and data:
 \url{https://github.com/testofschool/isomorph-eval}}

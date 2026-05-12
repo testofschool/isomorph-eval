@@ -307,6 +307,14 @@ def build_semantic_role_map(nodes, question_text):
         val = node["value"]
         int_val = int(val) if val == int(val) else val
 
+        # Rule 0: Values not present in question text must NOT be mutated.
+        # These are intermediate values from annotation algebra (e.g., the
+        # solver writes <<40=40>> for a value derived from question numbers).
+        val_str = str(int_val) if val == int(val) else str(val)
+        if val_str not in question_text:
+            role_map[node["id"]] = "CONSTANT"
+            continue
+
         # Rule 1: Known constants that appear exactly once as a leaf
         # but could be confused with other occurrences
         if int_val in KNOWN_CONSTANTS:
@@ -326,8 +334,36 @@ def build_semantic_role_map(nodes, question_text):
             role_map[node["id"]] = "CONSTANT"
             continue
 
+        # Rule 3: Values appearing ≥2 times in question text likely serve
+        # different semantic roles (e.g., "5 cars" and "$5 each"). Mutating
+        # one occurrence while the graph uses both produces wrong answers.
+        text_occurrences = len(re.findall(r'\b' + re.escape(val_str) + r'\b', question_text))
+        if text_occurrences >= 2:
+            role_map[node["id"]] = "CONSTANT"
+            continue
+
         # Default: treat as VARIABLE (safe to mutate)
         role_map[node["id"]] = "VARIABLE"
+
+    # Safety: if ALL leaves are CONSTANT, try to promote the largest value
+    # that appears EXACTLY ONCE in the question text (safe to mutate).
+    # Do NOT promote values that appear multiple times (conflation risk)
+    # or values that don't appear in the question (phantom values).
+    n_variable = sum(1 for v in role_map.values() if v == "VARIABLE")
+    if n_variable == 0 and leaf_nodes:
+        candidates = sorted(
+            leaf_nodes,
+            key=lambda n: abs(n["value"]),
+            reverse=True,
+        )
+        for cand in candidates:
+            if abs(cand["value"]) <= 1:
+                continue
+            val_str = str(int(cand["value"])) if cand["value"] == int(cand["value"]) else str(cand["value"])
+            text_count = len(re.findall(r'\b' + re.escape(val_str) + r'\b', question_text))
+            if text_count == 1:
+                role_map[cand["id"]] = "VARIABLE"
+                break
 
     return role_map
 
@@ -415,8 +451,11 @@ def sample_same_magnitude(original_value, rng, exclude=None):
     return None
 
 
-def sample_values_for_graph(nodes, role_map, rng, max_attempts=50):
+def sample_values_for_graph(nodes, role_map, rng, max_attempts=50, original_answer=None):
     """Sample a complete set of replacement values that produce integer intermediates.
+
+    If original_answer is provided, rejects variants where the answer magnitude
+    differs by more than 3x from the original (prevents magnitude inflation).
 
     Returns new_nodes (with mutated values) or None if no valid set found.
     """
@@ -465,6 +504,12 @@ def sample_values_for_graph(nodes, role_map, rng, max_attempts=50):
         if answer != int(answer):
             continue
 
+        # Magnitude preservation: reject if answer is >3x or <1/3x of original
+        if original_answer is not None and original_answer != 0:
+            ratio = abs(answer) / abs(original_answer)
+            if ratio > 3.0 or ratio < 1 / 3.0:
+                continue
+
         return new_nodes, int(answer)
 
     return None, None
@@ -475,44 +520,47 @@ def sample_values_for_graph(nodes, role_map, rng, max_attempts=50):
 # ============================================================================
 
 def generate_variant_text(original_question, original_nodes, new_nodes, variant_idx):
-    """Generate variant question text by precise number replacement.
+    """Generate variant question text by simultaneous positional replacement.
 
-    Uses positional replacement to avoid conflation: each leaf value in
-    the original is matched to a specific occurrence in the text.
+    Finds all number positions in the original text, matches each to a
+    graph leaf by value (first-match, greedy), then replaces all at once
+    from right to left to avoid position-shift collisions.
     """
     leaf_orig = [n for n in original_nodes if n["op"] == "assign"]
     leaf_new = [n for n in new_nodes if n["op"] == "assign"]
 
-    # Build replacement pairs: (original_value, new_value)
-    replacements = []
+    # Build a map: for each leaf that changed, record (orig_val_str, new_val_str)
+    change_map = {}
     for orig_n, new_n in zip(leaf_orig, leaf_new):
         if orig_n["value"] != new_n["value"]:
-            replacements.append((orig_n["value"], new_n["value"]))
+            orig_str = str(int(orig_n["value"])) if orig_n["value"] == int(orig_n["value"]) else str(orig_n["value"])
+            new_str = str(int(new_n["value"])) if new_n["value"] == int(new_n["value"]) else str(new_n["value"])
+            if orig_str not in change_map:
+                change_map[orig_str] = []
+            change_map[orig_str].append(new_str)
 
-    if not replacements:
+    if not change_map:
         return original_question
 
-    # Do positional replacement: find each number in the text and replace
-    # the CORRECT occurrence based on order-of-appearance matching
+    # Find all number positions in the original text
+    positions = []  # (start, end, matched_str, replacement_str)
+    for match in NUMBER_RE.finditer(original_question):
+        num_str = match.group(1)
+        if num_str in change_map and change_map[num_str]:
+            replacement = change_map[num_str].pop(0)
+            positions.append((match.start(), match.end(), num_str, replacement))
+
+    # Replace from right to left so positions don't shift
     variant_q = original_question
-    for orig_val, new_val in replacements:
-        orig_str = str(int(orig_val)) if orig_val == int(orig_val) else str(orig_val)
-        new_str = str(int(new_val)) if new_val == int(new_val) else str(new_val)
+    for start, end, _, replacement in reversed(positions):
+        variant_q = variant_q[:start] + replacement + variant_q[end:]
 
-        # Use regex to find the FIRST occurrence as a whole word
-        pattern = re.compile(r'\b' + re.escape(orig_str) + r'\b')
-        match = pattern.search(variant_q)
-        if match:
-            variant_q = variant_q[:match.start()] + new_str + variant_q[match.end():]
-        else:
-            # Fallback: simple string replace (first occurrence)
-            variant_q = variant_q.replace(orig_str, new_str, 1)
-
-    # Swap agent name
+    # Swap agent name — use word boundary regex and replace ALL occurrences
     agent = AGENTS[(variant_idx * 7 + 3) % len(AGENTS)]
-    for name in GSM8K_NAMES:
-        if name in variant_q:
-            variant_q = variant_q.replace(name, agent, 1)
+    for name in sorted(GSM8K_NAMES, key=len, reverse=True):
+        name_pattern = re.compile(r'\b' + re.escape(name) + r'\b')
+        if name_pattern.search(variant_q):
+            variant_q = name_pattern.sub(agent, variant_q)
             break
 
     return variant_q
@@ -613,6 +661,22 @@ def main():
         for nid in conflation_protected:
             role_map[nid] = "CONSTANT"
 
+        # Reject items where any leaf value doesn't appear in question text.
+        # These have incomplete computation graphs (annotation starts with
+        # pre-computed intermediates) that produce wrong answers when mutated.
+        leaf_nodes = [n for n in nodes if n["op"] == "assign"]
+        has_phantom = False
+        for ln in leaf_nodes:
+            val = ln["value"]
+            val_str = str(int(val)) if val == int(val) else str(val)
+            if val_str not in row["question"]:
+                has_phantom = True
+                break
+        if has_phantom:
+            print(f"  WARNING: {item_id} has phantom leaf values, skipping")
+            regen_fail += 1
+            continue
+
         n_variable = sum(1 for v in role_map.values() if v == "VARIABLE")
         n_constant = sum(1 for v in role_map.values() if v == "CONSTANT")
 
@@ -623,10 +687,10 @@ def main():
 
         new_variants = []
         for k in range(K):
-            seed = hash((item_id, k, "v2")) % (2 ** 32)
+            seed = int(hashlib.sha256(f"{item_id}_{k}_v2".encode()).hexdigest(), 16) % (2 ** 32)
             rng = random.Random(seed)
 
-            new_nodes, new_answer = sample_values_for_graph(nodes, role_map, rng)
+            new_nodes, new_answer = sample_values_for_graph(nodes, role_map, rng, original_answer=answer)
             if new_nodes is None:
                 continue
 
@@ -653,6 +717,10 @@ def main():
                 for v in new_leaves
             )
 
+            # Reject if variant text is identical to original
+            if variant_q.strip() == row["question"].strip():
+                continue
+
             new_variants.append({
                 "item_id": f"{item_id}_v{k:02d}",
                 "question": variant_q,
@@ -663,6 +731,13 @@ def main():
             })
 
         if len(new_variants) >= 3:
+            # Reject answer-invariant items (all variants same answer as original)
+            var_answers = set(v["answer"] for v in new_variants)
+            if len(var_answers) == 1 and float(answer) in var_answers:
+                print(f"  WARNING: {item_id} is answer-invariant, skipping")
+                regen_fail += 1
+                continue
+
             new_item = dict(item)
             new_item["variants"] = new_variants
             new_item["regenerated_v2"] = True

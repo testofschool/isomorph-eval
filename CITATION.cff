@@ -1,10 +1,15 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "Isomorph-Eval"
+title: "Isomorph-Eval: Structurally Equivalent Benchmarks Reveal That Annotation-Chain Replay Produces False Contamination Signals"
 authors:
   - family-names: "Kang"
     given-names: "Jung Min"
     email: "gangjeongmin23@gmail.com"
 repository-code: "https://github.com/testofschool/isomorph-eval"
 license: MIT
+date-released: "2026-05-12"
+# TODO: Update identifiers once arXiv IDs are assigned
+# identifiers:
+#   - type: doi
+#     value: "10.48550/arXiv.2606.XXXXX"

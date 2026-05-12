@@ -1,43 +1,22 @@
 % ==========================================================================
-% Sections 5-6: Experimental Setup and Results (Empirical) — v4
+% Sections 5-8: Setup, Results, Discussion, Limitations
 % ==========================================================================
 
 \section{Experimental Setup}
 \label{sec:setup}
 
-\subsection{Evaluation Dataset}
+\subsection{Dataset}
 We apply the Isomorphic Engine (Section~\ref{sec:engine}) to the
 GSM8K test set~\cite{cobbe2021gsm8k}, parsing all 1{,}319 problems
 via the rule-based annotation parser. After applying the strict
 validation pipeline---filtering problems with fractional leaf values,
-value-conflation between inputs and implicit constants, non-integer
-variant answers, negative intermediates, excessively large answers
-($>10^8$), and text-replacement mismatches---the final dataset contains
-\textbf{667 original items with 3{,}199 verified $\tau$-isomorphic
-variants} (3{,}866 evaluation entries total, $\sim$4.8 variants per
-item). We evaluate a \textbf{stratified subset of 100 items} with
-480 variants (580 evaluation entries per model), selected by uniform
-sampling across answer-magnitude quantiles as a proxy for difficulty.
-Each item is limited to 5~variants.
-
-\paragraph{Independent answer verification.}
-Initial evaluation on all 100~items revealed a uniform accuracy gap
-across all models, including an intended control model (GPT-OSS 120B,
-which was not trained on GSM8K). Investigation identified
-annotation-chain replay bugs in 40 of 100~items: the mechanism that
-computes variant answers by substituting values into the original
-solution chain fails when the same numeric value serves multiple
-semantic roles (value conflation) or when substitution mappings are
-applied inconsistently. To address this, we developed an independent
-verification engine using multi-model consensus: for each variant, if
-$\geq 2$ of 5~evaluated models agree on an answer that differs from
-the stated expected answer, the variant is flagged as broken. This
-procedure identified 29~items with $\geq 3$ broken variants and
-11~items with 1--2 broken variants. The remaining
-\textbf{59 verified-clean items} have variant answers confirmed by
-model consensus and form the basis of all reported results. We report
-the full 100-item results (before verification) in
-Appendix~\ref{app:unverified} for transparency.
+non-integer variant answers, negative intermediates, excessively large
+answers ($>10^8$), and text-replacement mismatches---the pipeline
+produces 667 original items with 3{,}199 verified $\tau$-isomorphic
+variants ($\sim$4.8 variants per item). We evaluate a stratified
+subset of 100~items with 480~variants, selected by uniform sampling
+across answer-magnitude quantiles. Each item is limited to
+5~variants.
 
 \subsection{Models}
 We evaluate five models spanning three organizations:
@@ -50,105 +29,319 @@ We evaluate five models spanning three organizations:
 \item \textbf{Llama~3.3 70B} (Meta, dense, 70B parameters)
 \end{itemize}
 
-\noindent GPT-OSS 120B serves as a \emph{negative control}: its training
-data is known to exclude GSM8K, so any observed gap should reflect
+\noindent GPT-OSS 120B serves as a \emph{negative control}: its
+training data is known to exclude GSM8K, so any observed gap reflects
 difficulty effects rather than contamination. All models are accessed
 via the Groq inference API at temperature $T = 0.0$ (greedy decoding)
 with chain-of-thought prompting and \verb|\boxed{}| answer extraction,
 with fallback to \verb|####|-delimited and last-number patterns.
-Extraction rates exceed 94\% for all models on both original and
-variant items, confirming that any accuracy gap is not an artifact
-of differential extraction. Qwen3, GPT-OSS, and Llama~70B were
-partially evaluated due to API daily token limits; both Llama~8B and
-Scout models completed full evaluation on all items.
+Qwen3, GPT-OSS, and Llama~70B were partially evaluated due to API
+daily token limits; Llama~8B and Scout completed full evaluation on
+all items.
 
 \subsection{Protocol}
 Each model receives every original item and every variant item exactly
-once ($T = 1$ trial per item, greedy decoding). We compute the
-item-level contamination delta $\delta_i$ as the difference between
-the model's accuracy on the original item and its mean accuracy across
-the item's $\tau$-isomorphic variants. The model-level metric
-$\Delta_{\mathrm{raw}}$ is the mean of item-level deltas.
-We report clustered bootstrap 95\% confidence intervals
-(10{,}000 resamples at the original-item level), analytic standard
-errors $\mathrm{SE}(\Delta_{\mathrm{raw}}) = \sigma(\delta_i) / \sqrt{N}$,
-and $p$-values from paired $t$-tests (testing
-$H_1{:}\ \Delta_{\mathrm{raw}} > 0$).
+once ($T = 1$ trial, greedy decoding). We compute the item-level
+isomorphic delta $\delta_i$ as the difference between the model's
+accuracy on the original item and its mean accuracy across the item's
+$\tau$-isomorphic variants. The model-level metric
+$\Delta_{\mathrm{iso}}$ is the mean of item-level deltas. We report
+clustered bootstrap 95\% confidence intervals (10{,}000 resamples at
+the original-item level), analytic standard errors, and $p$-values
+from paired $t$-tests.
 
 
 % ==================================================================
 \section{Results}
 \label{sec:results}
 
-\subsection{Main Results}
+\subsection{Initial Evaluation (Pre-Verification)}
+\label{sec:initial}
 
-Table~\ref{tab:main} presents the contamination diagnostics for all
-five evaluated models on the 59 verified-clean items.
+Table~\ref{tab:unverified} presents the initial results on all
+100~items before answer verification.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Results on all 100 items (before verification). The uniformity
+of $\Delta_{\mathrm{iso}} \approx +0.42$ across all models---including
+the negative control---is the first indicator that these results
+reflect data quality issues rather than contamination.}
+\label{tab:unverified}
+\begin{tabular}{lcccc}
+\toprule
+Model & $N$ & Acc$_{\mathrm{orig}}$ & Acc$_{\mathrm{iso}}$ & $\Delta_{\mathrm{iso}}$ \\
+\midrule
+Llama 3.1 8B & 100 & 92.0\% & 50.3\% & $+0.417$ \\
+Llama 4 Scout 17B & 100 & 94.0\% & 53.8\% & $+0.402$ \\
+Qwen3 32B$^\dagger$ & 70 & 100.0\% & 53.5\% & $+0.465$ \\
+GPT-OSS 120B$^\dagger$ & 20 & 100.0\% & 57.0\% & $+0.430$ \\
+Llama 3.3 70B$^\dagger$ & 14 & 100.0\% & 55.7\% & $+0.443$ \\
+\bottomrule
+\end{tabular}
+\vspace{1mm}
+{\footnotesize $^\dagger$Partial evaluation (API daily token limit).}
+\end{table}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_pre_post_comparison.pdf}
+\caption{The effect of answer verification on apparent
+$\Delta_{\mathrm{iso}}$. \textbf{Left:} Before verification, all
+five models---including the negative control (GPT-OSS
+120B)---appear uniformly ``contaminated'' at $\Delta \approx +0.42$.
+\textbf{Right:} After independent verification and pipeline repair,
+the signal collapses to $\Delta \approx +0.04$--$0.11$. Two models
+show mild gaps; three are statistically invariant.}
+\label{fig:pre_post}
+\end{figure*}
+
+Two features of these results are immediately suspicious. First, the
+magnitude is extreme: $\Delta \approx +0.42$ would imply that models
+lose 42 percentage points when numeric values change, a far larger
+effect than the 5--15 percentage-point baseline reported by
+GSM-Symbolic~\cite{mirzadeh2024gsmsymbolic}. Second, the uniformity
+is implausible: if the gap reflected contamination, we would expect
+variation across models with different training data and sizes, yet
+all five models---including GPT-OSS 120B (no GSM8K in training
+data)---show $\Delta \in [+0.40, +0.47]$. This uniformity suggests
+an item-level property, not a model-level one.
+
+
+% ------------------------------------------------------------------
+\subsection{Verification Audit: Seven Bug Classes}
+\label{sec:audit}
+
+Investigation of the suspicious initial results revealed that 41 of
+100~items had wrong variant answers due to failures in
+annotation-chain replay. We identified seven distinct bug classes:
+
+\paragraph{Bug 1: Value conflation.}
+When the same numeric value serves multiple semantic roles in a
+problem (e.g., ``5 red cars'' and ``\$5 per figure''), the annotation
+parser merges them into a single graph node. Mutating this node
+changes both uses in the graph but only one occurrence in the text,
+producing a graph-text mismatch. We addressed this with Rule~3:
+values appearing $\geq 2$ times in the question text are marked as
+constants and excluded from mutation.
+
+\paragraph{Bug 2: Phantom leaf values.}
+Some annotation chains introduce intermediate results as leaf nodes
+(e.g., \texttt{<<40=40>>} where 40 does not appear in the question).
+Mutating these phantom values produces wrong answers because the
+graph contains structural dependencies not present in the question
+text. We reject any item where a leaf value does not appear in the
+question.
+
+\paragraph{Bug 3: Positional replacement collisions.}
+Sequential text replacement fails when a new value matches the old
+value of a different node: replacing ``9'' with ``5'' and then ``5''
+with ``8'' causes the second replacement to target the \emph{newly
+inserted} ``5'' rather than the \emph{original} ``5''. We fixed this
+by collecting all replacement positions from the original text and
+applying them simultaneously from right to left.
+
+\paragraph{Bug 4: Magnitude inflation.}
+Same-digit-class sampling without magnitude constraints produces
+variant answers that are systematically larger than originals
+(Cohen's $d \approx 0.3$). We constrain variant answers to within
+$3\times$ of the original.
+
+\paragraph{Bug 5: Answer invariance.}
+Some graph structures produce the same answer regardless of leaf
+value mutations (e.g., when all variable values cancel). We reject
+items where all five variants produce the original answer.
+
+\paragraph{Bug 6: Partial name replacement.}
+Word-boundary-unaware string replacement causes ``Beth'' to match
+inside ``Bethany,'' producing nonsensical names. We use
+word-boundary-aware regex for name substitution.
+
+\paragraph{Bug 7: Node reuse (safety fallback override).}
+When all leaf nodes are marked constant, a safety fallback promotes
+the largest value to variable. If that value appears multiple times
+in the text, this reintroduces the conflation bug. We constrain the
+fallback to only promote values appearing exactly once.
+
+\paragraph{Verification procedure.}
+We used two complementary verification methods: (1)~multi-model
+consensus, flagging variants where $\geq 2$ models agree on an
+answer differing from the stated expected answer; and (2)~independent
+forward graph execution, recomputing all variant answers by
+executing the reasoning graph with the mutated leaf values. Method~(2)
+is the definitive check; method~(1) was used as an initial screening
+tool.
+
+After applying all fixes, we recovered 10 of the 41~broken items
+through pipeline repair and regeneration. The remaining 31 could not
+be regenerated due to irreducible structural issues (phantom leaves
+from multi-step intermediates, unparseable annotation chains). The
+final verified dataset contains \textbf{69 items} (59~verified-clean
++ 10~regenerated).
+
+
+% ------------------------------------------------------------------
+\subsection{Corrected Results (N=69, Verified)}
+\label{sec:corrected}
 
 \input{table_main_v3}
 
-\paragraph{Four of five models show no significant contamination.}
-Llama~4 Scout 17B, Qwen3 32B, GPT-OSS 120B, and Llama~3.3 70B all
-exhibit small, statistically non-significant accuracy gaps between
-original and variant items ($\Delta_{\mathrm{raw}} \in [+0.049, +0.066]$,
-all $p > 0.05$). These gaps are consistent with the 5--15 percentage
-point baseline difficulty increase from numeric perturbation reported
-in GSM-Symbolic~\cite{mirzadeh2024gsmsymbolic}. The negative control
-(GPT-OSS 120B, $\Delta_{\mathrm{raw}} = +0.053$, $p = 0.174$)
-confirms that the $\tau$-isomorphic variants are not systematically
-harder in a way that would create false contamination signals.
+Table~\ref{tab:main} presents the results on verified data.
 
-\paragraph{Llama~3.1 8B shows a mild gap.}
-The oldest model in our evaluation exhibits a statistically significant
-but modest accuracy gap: 94.9\% on originals versus 82.3\% on variants
-($\Delta_{\mathrm{raw}} = +0.126$, bootstrap 95\%
-CI: $[+0.051, +0.202]$, $p = 0.002$). This 12.6-point gap exceeds
-the baseline difficulty effect observed in the control model, suggesting
-a mild memorization component. However, the effect is substantially
-smaller than previously reported for similar model families (8--13\%
-in GSM1K~\cite{zhang2024gsm1k}), and the model still achieves 82.3\%
-accuracy on variants, indicating that the majority of its mathematical
-reasoning transfers to novel numeric contexts.
+\paragraph{Three of five models are invariant.}
+Llama~4 Scout~17B, GPT-OSS~120B, and Llama~3.3~70B all exhibit
+small, statistically non-significant accuracy gaps between original
+and variant items
+($\Delta_{\mathrm{iso}} \in [+0.041, +0.048]$, all $p > 0.05$).
+The negative control (GPT-OSS~120B,
+$\Delta_{\mathrm{iso}} = +0.048$, $p = 0.174$) confirms that the
+$\tau$-isomorphic variants are not systematically harder. Notably,
+Scout~17B achieved 100\% accuracy on all 50~regenerated variant
+items, demonstrating perfect reasoning transfer to novel numeric
+contexts.
 
-\paragraph{Data quality as a confound.}
-The dramatic difference between the unverified results
-($\Delta_{\mathrm{raw}} \approx +0.42$ uniformly across all models)
-and the verified-clean results ($\Delta_{\mathrm{raw}} \approx +0.06$)
-underscores the importance of independent answer verification in
-benchmark construction. Of the 40 items removed by verification,
-29 had $\geq 3$ variants with provably wrong expected answers due
-to annotation-chain replay bugs. Models that reasoned correctly on
-these variants were penalized, creating an artificial contamination
-signal that was uniform across all models --- including the control.
-This finding has implications for other benchmark perturbation
-approaches that rely on automated answer computation.
+\paragraph{Two models show mild gaps.}
+Llama~3.1~8B exhibits a statistically significant but modest
+accuracy gap: 95.7\% on originals versus 84.4\% on variants
+($\Delta_{\mathrm{iso}} = +0.113$, bootstrap 95\%
+CI: $[+0.049, +0.180]$, $p = 0.001$). This 11.3-point gap exceeds
+the control's baseline by approximately 6~percentage points, but is
+within the range reported by GSM-Symbolic for numeric perturbation
+sensitivity (up to 15~percentage
+points)~\cite{mirzadeh2024gsmsymbolic}. Qwen3~32B shows a
+borderline gap ($\Delta_{\mathrm{iso}} = +0.060$,
+$p = 0.044$), barely exceeding the negative control's $+0.048$.
+Given that the Qwen3 effect size is small and within
+the GSM-Symbolic baseline, and considering the limited sample size
+($N = 45$), this gap is more consistent with perturbation sensitivity
+than contamination. Whether the Llama~8B gap reflects contamination,
+perturbation sensitivity, or a combination cannot be determined from
+these data alone.
 
-\paragraph{Comparison to prior work.}
-Our verified-clean results are consistent with
-GSM1K~\cite{zhang2024gsm1k}, which reported 8--13\% performance
-drops for open-source models. The $\tau$-isomorphic approach provides
-a complementary methodology with stronger structural guarantees ---
-variants differ only in numeric values, not in problem framing ---
-but requires careful answer verification to avoid data quality
-confounds.
+\paragraph{The contrast is striking.}
+Figure~\ref{fig:pre_post} visualizes the collapse from
+$\Delta \approx +0.42$ to $\Delta \approx +0.04$--$0.11$ after
+verification. Figure~\ref{fig:delta_dist} shows the corresponding
+shift in per-item delta distributions: the bimodal pattern caused by
+broken items (left) gives way to a distribution concentrated near
+zero (right).
 
-\subsection{Limitations}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig2_delta_distribution.pdf}
+\caption{Per-item $\delta_i$ distributions for Llama~3.1~8B.
+\textbf{Left:} Pre-verification---bimodal distribution with a second
+mode near $\delta \approx 0.8$ from items with broken variant
+answers. \textbf{Right:} Post-verification---concentrated near zero,
+with 40 of 59 items at $\delta = 0$ (perfect transfer).}
+\label{fig:delta_dist}
+\end{figure*}
+
+
+% ------------------------------------------------------------------
+\subsection{Implications}
+\label{sec:implications}
+
+\paragraph{Annotation-chain replay is unreliable.}
+The central finding of this work is that annotation-chain replay---the
+standard approach to computing variant answers---produced systematically
+wrong answers in 41\% of items. This is not a minor data quality issue;
+it created an apparent contamination signal of $\Delta \approx +0.42$
+that was indistinguishable from genuine memorization on any individual
+model. Only the uniformity across models (including a negative control)
+revealed the problem. Researchers using this technique on a single
+model would have no way to detect the error.
+
+\paragraph{Independent verification is necessary.}
+Any benchmark variant generation pipeline must include independent
+answer verification: computing variant answers by a method that does
+not depend on the original solution chain. Forward graph execution---evaluating
+the reasoning graph with mutated leaf values---provides this
+independence because it operates on the graph structure directly rather
+than replaying the annotation text.
+
+\paragraph{Perturbation sensitivity is not contamination.}
+The remaining gaps ($\Delta \approx +0.04$--$0.11$) on verified data
+are consistent with baseline perturbation sensitivity rather than
+contamination. This distinction matters: a model that loses 5--10\%
+accuracy when numeric values change is exhibiting a reasoning
+fragility, not memorization. The negative control's gap
+($\Delta = +0.048$) establishes the baseline; only gaps significantly
+exceeding this baseline warrant contamination hypotheses.
+
+
+% ==================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{The cautionary tale.}
+The trajectory of this work---from apparent universal contamination to
+no contamination on clean data---illustrates a broader risk in the
+benchmark generation community. The pressure to demonstrate that
+models are contaminated, combined with the difficulty of verifying
+variant answers at scale, creates conditions where false positives
+are likely. Our experience suggests that any claim of contamination
+based on benchmark perturbation should be accompanied by independent
+answer verification, ideally via a negative control model.
+
+\paragraph{Connection to evaluation methodology.}
+In prior work~\cite{kang2026efsl}, we showed that evaluation accuracy
+degrades as a function of data sparsity ($S$) and item difficulty
+heterogeneity ($D$). Contamination ($C$) represents a third axis of
+this failure surface: $1 - \rho = f(S, D, C)$. The present work
+demonstrates that measuring $C$ is itself fraught with methodological
+challenges. When the evaluation matrix is sparse \emph{and} items have
+data quality issues, model rankings are doubly unreliable. IRT
+estimation on verified isomorphic data addresses all three axes
+simultaneously (Figure~\ref{fig:three_body}), but requires the
+variant answers to be correct---a requirement that is harder to
+satisfy than previously appreciated.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig3_three_body_surface.pdf}
+\caption{Theoretical evaluation failure surface
+(from~\cite{kang2026efsl}). Panels~A--B show ranking degradation
+from sparsity and difficulty; Panel~C adds contamination as a third
+axis; Panel~D shows how IRT + isomorphic verification addresses all
+three. This figure uses simulated data based on the EFSL regression
+coefficients.}
+\label{fig:three_body}
+\end{figure*}
+
+\paragraph{Recommendations for benchmark generation pipelines.}
+Based on our experience, we recommend: (1)~always include a negative
+control model with known-clean training data; (2)~verify variant
+answers via independent forward execution, not annotation-chain
+replay; (3)~check for value conflation before mutation; (4)~use
+simultaneous rather than sequential text replacement; (5)~reject
+items with phantom leaf values; (6)~constrain variant answer
+magnitude to prevent systematic inflation.
+
+\paragraph{Open question: is any model contaminated on GSM8K?}
+Our verified data suggests not, with the possible exception of
+Llama~3.1~8B's and Qwen3~32B's mild gaps. But $N = 69$ is limited,
+and our evaluation covers only 5~models. A definitive answer
+requires a fully verified
+dataset of $\geq 200$ items evaluated across $\geq 20$ models with
+multiple trials per item.
+
+
+% ==================================================================
+\section{Limitations}
 \label{sec:limitations}
-Several caveats apply to these results. First, the verification
-procedure reduced the evaluation set from 100 to 59~items, reducing
-statistical power; re-evaluation on a fully verified dataset of
-$\geq 100$~items is needed to confirm the mild-gap finding for
-Llama~3.1 8B and to detect smaller effects. Second, the evaluation
-uses $T = 1$ trial per item (greedy decoding), preventing estimation
-of per-item response variance; future work should use $T \geq 5$ to
-compute proper IRT item parameters. Third, three of five models
-(Qwen3, GPT-OSS, Llama~70B) were only partially evaluated due to
-API daily token limits, yielding small effective sample sizes ($N = 8$
-to $38$). Fourth, the multi-model consensus verification relies on
-the assumption that multiple models solving a problem correctly is
-strong evidence that the expected answer is correct; while this
-assumption held for all manually-verified cases in our audit, it is
-not a formal proof of answer correctness. Fifth, the annotation-chain
-replay bugs identified in this work suggest that the variant generation
-pipeline requires additional safeguards before the full dataset can
-be considered production-ready.
+
+Several caveats apply. First, $N = 69$ is smaller than ideal; 31~items
+could not be regenerated due to irreducible phantom leaf structures.
+Second, the evaluation uses $T = 1$ trial per item (greedy decoding),
+preventing estimation of per-item response variance; future work
+should use $T \geq 5$. Third, three of five models were only partially
+evaluated due to API daily token limits, yielding small effective
+sample sizes ($N = 9$ to $45$). Fourth, the remaining magnitude
+inflation in clean items (Cohen's $d$ statistically significant)
+means a small difficulty confound persists even in the verified data.
+Fifth, we tested only GSM8K; other benchmarks may exhibit different
+bug patterns. Sixth, the bug taxonomy (Section~\ref{sec:audit}) is
+specific to annotation-chain replay on math word problems; other
+domains and generation methods will have their own failure modes.

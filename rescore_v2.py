@@ -87,6 +87,13 @@ def main():
         else:
             clean_ids.add(item["item_id"])
 
+    # Build expected-answer lookup from the dataset for re-scoring v2 results
+    expected_answers = {}
+    for item in v2_data["items"]:
+        expected_answers[item["item_id"]] = float(item["answer"])
+        for var in item.get("variants", []):
+            expected_answers[var["item_id"]] = float(var["answer"])
+
     item_ids = clean_ids if args.clean_only else clean_ids | regen_ids
 
     print(f"Dataset: {len(item_ids)} items ({len(clean_ids)} clean + {len(regen_ids)} regenerated)")
@@ -146,10 +153,14 @@ def main():
                             n_var_correct += 1
                 elif iid in regen_ids and not args.clean_only:
                     # Use v2 results for regenerated items
-                    if var_key in v2_raw:
+                    # Re-score against current dataset expected answers
+                    var_item_id = f"{iid}_v{vi:02d}"
+                    if var_key in v2_raw and var_item_id in expected_answers:
                         var_total += 1
                         n_var_total += 1
-                        if v2_raw[var_key]["correct"]:
+                        extracted = v2_raw[var_key].get("extracted")
+                        expected = expected_answers[var_item_id]
+                        if answers_match(extracted, expected):
                             var_correct += 1
                             n_var_correct += 1
 

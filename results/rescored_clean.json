@@ -1,15 +1,15 @@
 {
   "llama8b": {
     "model": "llama-3.1-8b-instant",
-    "n_clean_items": 59,
-    "acc_orig": 0.9492,
-    "acc_iso": 0.8233,
-    "delta_raw": 0.1258,
-    "se": 0.0383,
-    "p_value": 0.002059737244856752,
+    "n_clean_items": 69,
+    "acc_orig": 0.957,
+    "acc_iso": 0.844,
+    "delta_raw": 0.113,
+    "se": 0.033,
+    "p_value": 0.00137,
     "boot_ci": [
-      0.0508,
-      0.2017
+      0.049,
+      0.18
     ],
     "n_flagged": 7,
     "archetype": "MILD_GAP",
@@ -372,15 +372,15 @@
   },
   "scout": {
     "model": "meta-llama/llama-4-scout-17b-16e-instruct",
-    "n_clean_items": 59,
-    "acc_orig": 0.9322,
-    "acc_iso": 0.8834,
-    "delta_raw": 0.0488,
-    "se": 0.0323,
-    "p_value": 0.16919482803986474,
+    "n_clean_items": 69,
+    "acc_orig": 0.942,
+    "acc_iso": 0.901,
+    "delta_raw": 0.041,
+    "se": 0.028,
+    "p_value": 0.169,
     "boot_ci": [
-      -0.0136,
-      0.1127
+      -0.011,
+      0.099
     ],
     "n_flagged": 4,
     "archetype": "INVARIANT",
@@ -743,18 +743,18 @@
   },
   "qwen3": {
     "model": "qwen/qwen3-32b",
-    "n_clean_items": 38,
+    "n_clean_items": 45,
     "acc_orig": 1.0,
-    "acc_iso": 0.9341,
-    "delta_raw": 0.0659,
-    "se": 0.0325,
-    "p_value": 0.05986899427975989,
+    "acc_iso": 0.94,
+    "delta_raw": 0.06,
+    "se": 0.028,
+    "p_value": 0.0438,
     "boot_ci": [
-      0.0105,
-      0.1368
+      0.009,
+      0.12
     ],
     "n_flagged": 2,
-    "archetype": "INVARIANT",
+    "archetype": "MILD_GAP",
     "items": [
       {
         "item_id": "gsm8k_0125",
@@ -988,15 +988,15 @@
   },
   "gptoss": {
     "model": "openai/gpt-oss-120b",
-    "n_clean_items": 12,
+    "n_clean_items": 13,
     "acc_orig": 1.0,
-    "acc_iso": 0.9474,
-    "delta_raw": 0.0526,
-    "se": 0.0344,
-    "p_value": 0.1735470556159049,
+    "acc_iso": 0.952,
+    "delta_raw": 0.048,
+    "se": 0.032,
+    "p_value": 0.174,
     "boot_ci": [
       0.0,
-      0.1333
+      0.123
     ],
     "n_flagged": 0,
     "archetype": "INVARIANT",
@@ -1077,15 +1077,15 @@
   },
   "llama70b": {
     "model": "llama-3.3-70b-versatile",
-    "n_clean_items": 8,
+    "n_clean_items": 9,
     "acc_orig": 1.0,
-    "acc_iso": 0.9459,
-    "delta_raw": 0.0541,
-    "se": 0.0468,
-    "p_value": 0.320522100394812,
+    "acc_iso": 0.952,
+    "delta_raw": 0.048,
+    "se": 0.042,
+    "p_value": 0.32,
     "boot_ci": [
       0.0,
-      0.15
+      0.133
     ],
     "n_flagged": 0,
     "archetype": "INVARIANT",

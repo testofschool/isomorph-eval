@@ -17,7 +17,7 @@
 
 We now present the three components of Isomorph-Eval: the formal
 definition of task isomorphism (\S\ref{sec:isomorphism}), the
-generative engine (\S\ref{sec:engine}), and the contamination diagnostic
+generative engine (\S\ref{sec:engine}), and the perturbation sensitivity diagnostic
 (\S\ref{sec:delta}).
 
 % ------------------------------------------------------------------
@@ -199,10 +199,10 @@ consistency, and digit-class preservation.
 
 
 % ------------------------------------------------------------------
-\subsection{The Contamination Delta}
+\subsection{The Perturbation Sensitivity Delta}
 \label{sec:delta}
 
-\begin{definition}[Item-Level Contamination Delta]
+\begin{definition}[Item-Level Isomorphic Delta]
 \label{def:item_delta}
 For model $M$ evaluated on original item $i$ with $T$ trials and on $K$
 $\tau$-isomorphic variants $\{i'_1, \ldots, i'_K\}$ with $T$ trials
@@ -219,15 +219,18 @@ each:
 \end{equation}
 where $X_{i,t} \in \{0,1\}$ is the binary outcome of model $M$ on item
 $i$ at trial $t$ (with temperature $> 0$ to induce sampling variance).
-Under $H_0$ (no contamination), $\mathbb{E}[\delta_i] = 0$ because
+Under $H_0$ (no perturbation sensitivity), $\mathbb{E}[\delta_i] = 0$ because
 $i \cong_\tau i'_k$ implies identical IRT parameters (Conjecture~\ref{conj:rsh}).
+A positive $\delta_i$ may indicate memorization, numeric perturbation
+sensitivity, or both; distinguishing these requires comparison with a
+negative control model (Section~\ref{sec:results}).
 \end{definition}
 
-\begin{definition}[IRT-Weighted Contamination Delta]
+\begin{definition}[IRT-Weighted Isomorphic Delta]
 \label{def:model_delta}
 For model $M$ evaluated on benchmark $B = \{i_1, \ldots, i_N\}$:
 \begin{equation}
-\Delta_{\mathrm{contam}}^{\mathrm{IRT}}(M, B) = \frac{1}{N}
+\Delta_{\mathrm{iso}}^{\mathrm{IRT}}(M, B) = \frac{1}{N}
 \sum_{i=1}^{N} \hat{a}_i \cdot \delta_i(M)
 \label{eq:delta_irt}
 \end{equation}
@@ -276,7 +279,7 @@ z_i = \frac{\hat{b}_i^{\,\mathrm{orig}} -
 \hat{b}_i^{\,\mathrm{iso}})}
 \label{eq:wald}
 \end{equation}
-with Bonferroni correction: item $i$ is flagged as ``memorized'' if
+with Bonferroni correction: item $i$ is flagged as showing DIF if
 $|z_i| > z_{\alpha / 2N}$. The global test uses a likelihood ratio
 statistic $\Lambda = -2[\ell_0 - \ell_1] \sim \chi^2(N)$, comparing
 the constrained model ($b^{\mathrm{orig}} = b^{\mathrm{iso}}$
@@ -340,16 +343,14 @@ the resulting evaluation matrix is still sparse and heterogeneous.
 all three axes simultaneously.
 
 \paragraph{Diagnostic archetypes.}
-Based on the pattern of ($\Delta_{\mathrm{contam}}$, $\Delta\theta$,
-DIF), we classify models into four archetypes
-(Table~\ref{tab:archetypes}):
-\emph{Robust Reasoner}
-($\Delta_{\mathrm{contam}} \leq 0.02$, no flagged items);
-\emph{Pure Memorizer}
-($\Delta_{\mathrm{contam}} \geq 0.10$, $>$30\% items flagged);
-\emph{Syntactic Matcher}
-($0.03 \leq \Delta_{\mathrm{contam}} < 0.10$, mixed DIF);
-and \emph{Latent Contaminator}
-(low per-item $\Delta$ but cross-benchmark mismatch, capturing the
-Goodhart-in-checkpoint-selection phenomenon identified by
-\citet{zhang2024gsm1k}).
+Based on the pattern of ($\Delta_{\mathrm{iso}}$, $p$-value,
+original accuracy), we classify models into four categories:
+\emph{Invariant} ($p > 0.05$, gap consistent with baseline
+perturbation sensitivity);
+\emph{Mild Gap} ($p < 0.05$, $\Delta < 0.15$);
+\emph{Partial Memorizer} ($\Delta \geq 0.15$);
+and \emph{Pure Memorizer} ($\Delta > 0.30$, original accuracy $> 85\%$).
+We note that our empirical results (Section~\ref{sec:results}) found
+no models in the latter two categories on verified data; the
+classification remains theoretical pending evaluation on a larger,
+fully verified dataset.

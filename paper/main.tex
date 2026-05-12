@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
+\graphicspath{{./}{../figures/}}
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage[margin=1in]{geometry}
@@ -15,10 +16,10 @@
 \newtheorem{definition}{Definition}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{proposition}{Proposition}
-\newcommand{\Dcont}{\Delta_{\mathrm{contam}}^{\mathrm{IRT}}\xspace}
+\newcommand{\Dcont}{\Delta_{\mathrm{iso}}^{\mathrm{IRT}}\xspace}
 
-\title{Isomorph-Eval: Separating Reasoning from Recall in LLM Evaluation\\
-via Structurally Equivalent Benchmarks and Item Response Theory}
+\title{Isomorph-Eval: Structurally Equivalent Benchmarks Reveal\\
+That Annotation-Chain Replay Produces False Contamination Signals}
 
 \author{Jung Min Kang\thanks{Corresponding author. Email: gangjeongmin23@gmail.com}\\
 Independent Researcher\\
@@ -30,29 +31,36 @@ Seoul, South Korea}
 \maketitle
 
 \begin{abstract}
-The credibility of AI evaluation is threatened by two compounding
-failures: benchmark contamination (test items leak into training data)
-and naive aggregation (simple averaging ignores item difficulty and data
-sparsity). We present \textbf{Isomorph-Eval}, a unified framework that
-addresses both. We formalize \emph{$\tau$-isomorphism}, a graph-theoretic
-definition of structural equivalence between benchmark items, and build
-an open-source \emph{Isomorphic Engine} that generates unlimited
-verified variants of existing benchmark items with automatically computed
-answers. We define the \emph{Contamination Delta}
-$\Delta_{\mathrm{contam}}^{\mathrm{IRT}}$, an IRT-weighted metric
-grounded in Differential Item Functioning, that quantifies memorization
-by comparing model performance on original items versus structurally
-equivalent variants. In controlled simulations, the IRT-weighted delta
-is 23$\times$ more discriminative than raw accuracy gaps. Applied to
-GSM8K with five LLMs (including a negative control), evaluation on
-59 independently verified items shows that four of five models exhibit
-no significant contamination ($\Delta \in [+0.049, +0.066]$, all
-$p > 0.05$), while one model shows a mild gap
-($\Delta = +0.126$, $p = 0.002$). Critically, the framework uncovered
-a data quality confound in annotation-chain replay that inflated
-apparent contamination signals uniformly across all models, demonstrating
-the importance of independent answer verification in benchmark
-construction. We release the complete pipeline as open-source software.
+We present \textbf{Isomorph-Eval}, a framework for generating
+structurally equivalent benchmark variants via \emph{$\tau$-isomorphism},
+a graph-theoretic definition that preserves operation types, dependency
+structure, and complexity weights while ensuring complete surface
+novelty. The framework's four-stage pipeline (Parser $\to$ Mutator
+$\to$ Generator $\to$ Verifier) produces unlimited verified variants
+of existing benchmark items with automatically computed answers.
+
+Applying Isomorph-Eval to GSM8K, we discover that
+\emph{annotation-chain replay}---the standard approach to computing
+variant answers by substituting values into the original solution
+chain---produces systematically wrong answers in 41\% of items. We
+identify seven bug classes (value conflation, phantom leaf values,
+positional replacement collisions, magnitude inflation, answer
+invariance, partial name replacement, and node reuse) that create
+false contamination signals: all five evaluated models appeared
+uniformly contaminated ($\Delta \approx +0.42$) on the unverified
+data, including a negative control model with no GSM8K in its
+training data.
+
+After independent verification and pipeline repair, the signal
+collapses. On 69 verified items, three of five models show equivalent
+performance on originals and variants
+($\Delta_{\mathrm{iso}} \in [+0.041, +0.048]$, all $p > 0.05$),
+while the two remaining models show mild gaps
+($\Delta_{\mathrm{iso}} \in [+0.060, +0.113]$) consistent with
+known numeric perturbation sensitivity. We argue that independent
+answer verification via forward graph execution is necessary for any
+benchmark variant generation framework, and release the complete
+pipeline as open-source software.
 \end{abstract}
 
 \input{paper_outline_and_intro}
@@ -62,39 +70,37 @@ construction. We release the complete pipeline as open-source software.
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented Isomorph-Eval, a unified framework for detecting
-benchmark contamination while correcting for data sparsity and item
-difficulty heterogeneity. The framework makes three contributions:
-(1)~$\tau$-isomorphism formalizes structural equivalence between
-benchmark items via graph-theoretic invariants; (2)~the Isomorphic
-Engine generates unlimited verified variants with automatically computed
-answers; and (3)~the Contamination Delta $\Dcont$ provides an
-IRT-grounded diagnostic that is 23$\times$ more discriminative than
-raw accuracy gaps in controlled simulations.
+We have presented Isomorph-Eval, a framework for generating verified
+structurally equivalent benchmark variants grounded in a formal
+definition of $\tau$-isomorphism. The framework makes four
+contributions: (1)~$\tau$-isomorphism formalizes structural equivalence
+via graph-theoretic invariants; (2)~the Isomorphic Engine generates
+unlimited verified variants with automatically computed answers;
+(3)~the identification of seven bug classes in annotation-chain replay
+that produce false contamination signals; and (4)~empirical evidence
+that on verified data, current LLMs show robust reasoning transfer to
+novel numeric contexts.
 
-Our empirical evaluation on GSM8K with five models revealed an
-important methodological lesson: initial results suggested uniform
-contamination across all models ($\Delta \approx +0.42$), but
-independent answer verification identified broken variant answers in
-40\% of items. On the 59 verified-clean items, the contamination
-signal collapsed to $\Delta \approx +0.05$--$0.13$, with only
-Llama~3.1 8B showing a mild but significant gap. This finding
-underscores that \emph{answer verification must be independent of the
-generation pipeline}---a principle that applies to any benchmark
-perturbation methodology.
+The central lesson of this work is methodological: annotation-chain
+replay---substituting values into the original solution chain to compute
+variant answers---produced systematically wrong answers in 41\% of
+items, creating an apparent contamination signal of
+$\Delta \approx +0.42$ that was uniform across all models including a
+negative control. After independent verification, the signal collapsed
+to $\Delta \approx +0.04$--$0.11$, with two models showing mild gaps
+consistent with known perturbation sensitivity. This finding
+has implications for any benchmark perturbation methodology:
+\emph{answer verification must be independent of the generation
+pipeline}.
 
-The $\tau$-isomorphism framework and the Isomorphic Engine are the
-lasting contributions of this work. They provide a principled
-methodology for generating structurally equivalent benchmark variants
-that can be applied to any binary-scored evaluation task with
-decomposable reasoning structure. We release the complete pipeline
-as open-source software at
+We release the complete pipeline as open-source software at
 \url{https://github.com/testofschool/isomorph-eval}.
 
 \paragraph{Future work.}
-Three directions are priorities: (1)~fixing the annotation-chain
-replay bugs and regenerating variants for the full dataset to increase
-statistical power; (2)~extending the framework beyond mathematical
+Three directions are priorities: (1)~extending the variant generation
+pipeline to handle the 31~items with irreducible structural issues
+(e.g., multi-step phantom intermediates) and expanding to the full
+GSM8K test set; (2)~extending the framework beyond mathematical
 reasoning to logic, code generation, and scientific reasoning;
 (3)~fitting full 2PL IRT models with $\geq 30$ models to enable
 proper item parameter estimation and DIF testing.
