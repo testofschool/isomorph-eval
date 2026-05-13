@@ -1,0 +1,673 @@
+{
+  "total_items": 69,
+  "total_variants": 333,
+  "failures": [
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v00",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Zaramy' appears to append suffix 'my' from original name 'Tommy'"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tommy' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Kwamemy' appears to append suffix 'my' from original name 'Tommy'"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tommy' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v02",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Linneamy' appears to append suffix 'my' from original name 'Tommy'"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tommy' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Tomásmy' appears to append suffix 'my' from original name 'Tommy'"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tommy' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Aishamy' appears to append suffix 'my' from original name 'Tommy'"
+    },
+    {
+      "item_id": "gsm8k_0072",
+      "variant_id": "gsm8k_0072_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tommy' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0127",
+      "variant_id": "gsm8k_0127_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Amy' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0127",
+      "variant_id": "gsm8k_0127_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Amy' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0127",
+      "variant_id": "gsm8k_0127_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Amy' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0127",
+      "variant_id": "gsm8k_0127_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Amy' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0127",
+      "variant_id": "gsm8k_0127_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Amy' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0163",
+      "variant_id": "gsm8k_0163_v01",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0163_v00"
+    },
+    {
+      "item_id": "gsm8k_0163",
+      "variant_id": "gsm8k_0163_v02",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0163_v00"
+    },
+    {
+      "item_id": "gsm8k_0236",
+      "variant_id": "gsm8k_0236_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0236_v00"
+    },
+    {
+      "item_id": "gsm8k_0253",
+      "variant_id": "gsm8k_0253_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bill' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0253",
+      "variant_id": "gsm8k_0253_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bill' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0253",
+      "variant_id": "gsm8k_0253_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bill' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0253",
+      "variant_id": "gsm8k_0253_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bill' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0253",
+      "variant_id": "gsm8k_0253_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bill' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0260",
+      "variant_id": "gsm8k_0260_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carla' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0260",
+      "variant_id": "gsm8k_0260_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carla' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0260",
+      "variant_id": "gsm8k_0260_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carla' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0260",
+      "variant_id": "gsm8k_0260_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carla' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0260",
+      "variant_id": "gsm8k_0260_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carla' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0366",
+      "variant_id": "gsm8k_0366_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Jane' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0366",
+      "variant_id": "gsm8k_0366_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Jane' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0366",
+      "variant_id": "gsm8k_0366_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Jane' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0366",
+      "variant_id": "gsm8k_0366_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Jane' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0366",
+      "variant_id": "gsm8k_0366_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Jane' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0376",
+      "variant_id": "gsm8k_0376_v03",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0376_v00"
+    },
+    {
+      "item_id": "gsm8k_0376",
+      "variant_id": "gsm8k_0376_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0376_v02"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v00",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Prince' appears to append suffix 'ce' from original name 'Bruce'"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bruce' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Prince' appears to append suffix 'ce' from original name 'Bruce'"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bruce' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v02",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Prince' appears to append suffix 'ce' from original name 'Bruce'"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bruce' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Prince' appears to append suffix 'ce' from original name 'Bruce'"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bruce' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Prince' appears to append suffix 'ce' from original name 'Bruce'"
+    },
+    {
+      "item_id": "gsm8k_0432",
+      "variant_id": "gsm8k_0432_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Bruce' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0590",
+      "variant_id": "gsm8k_0590_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Alex' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0590",
+      "variant_id": "gsm8k_0590_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Alex' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0590",
+      "variant_id": "gsm8k_0590_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Alex' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0590",
+      "variant_id": "gsm8k_0590_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Alex' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0590",
+      "variant_id": "gsm8k_0590_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Alex' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0826",
+      "variant_id": "gsm8k_0826_v01",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0826_v00"
+    },
+    {
+      "item_id": "gsm8k_0826",
+      "variant_id": "gsm8k_0826_v02",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0826_v00"
+    },
+    {
+      "item_id": "gsm8k_0826",
+      "variant_id": "gsm8k_0826_v03",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0826_v00"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v00",
+      "check": "CONSISTENCY",
+      "details": "Original name 'Sarah’s' appears 1 time(s); candidate replacement 'Priya' appears 2 time(s), with 0 leftover original occurrence(s)"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Xiulan’s' appears to append suffix '’s' from original name 'Sarah’s'"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v01",
+      "check": "CONSISTENCY",
+      "details": "Original name 'Sarah’s' appears 1 time(s); candidate replacement 'Xiulan' appears 2 time(s), with 0 leftover original occurrence(s)"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v02",
+      "check": "CONSISTENCY",
+      "details": "Original name 'Sarah’s' appears 1 time(s); candidate replacement 'Emeka' appears 2 time(s), with 0 leftover original occurrence(s)"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Linnea’s' appears to append suffix '’s' from original name 'Sarah’s'"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v03",
+      "check": "CONSISTENCY",
+      "details": "Original name 'Sarah’s' appears 1 time(s); candidate replacement 'Linnea' appears 2 time(s), with 0 leftover original occurrence(s)"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Dmitri’s' appears to append suffix '’s' from original name 'Sarah’s'"
+    },
+    {
+      "item_id": "gsm8k_0907",
+      "variant_id": "gsm8k_0907_v04",
+      "check": "CONSISTENCY",
+      "details": "Original name 'Sarah’s' appears 1 time(s); candidate replacement 'Dmitri' appears 2 time(s), with 0 leftover original occurrence(s)"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v00",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v00",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Thursday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tuesday' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v00",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Thursday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Thursday' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Thursday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tuesday' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v01",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Thursday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Thursday' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0915_v00"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Thursday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tuesday' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Thursday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Thursday' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Thursday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tuesday' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v03",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Thursday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Thursday' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_0915_v01"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Thursday' appears to append suffix 'sday' from original name 'Tuesday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Tuesday' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "SUBSTRING_ARTIFACT",
+      "details": "Variant token 'Wednesday' appears to append suffix 'sday' from original name 'Thursday'"
+    },
+    {
+      "item_id": "gsm8k_0915",
+      "variant_id": "gsm8k_0915_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Thursday' found 1 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1010",
+      "variant_id": "gsm8k_1010_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_1010_v03"
+    },
+    {
+      "item_id": "gsm8k_1103",
+      "variant_id": "gsm8k_1103_v03",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_1103_v02"
+    },
+    {
+      "item_id": "gsm8k_1103",
+      "variant_id": "gsm8k_1103_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_1103_v01"
+    },
+    {
+      "item_id": "gsm8k_1157",
+      "variant_id": "gsm8k_1157_v00",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carl' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1157",
+      "variant_id": "gsm8k_1157_v01",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carl' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1157",
+      "variant_id": "gsm8k_1157_v02",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carl' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1157",
+      "variant_id": "gsm8k_1157_v03",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carl' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1157",
+      "variant_id": "gsm8k_1157_v04",
+      "check": "LEFTOVER_NAME",
+      "details": "Original name 'Carl' found 2 time(s) in variant text"
+    },
+    {
+      "item_id": "gsm8k_1230",
+      "variant_id": "gsm8k_1230_v02",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_1230_v00"
+    },
+    {
+      "item_id": "gsm8k_1234",
+      "variant_id": "gsm8k_1234_v04",
+      "check": "DUPLICATE",
+      "details": "Duplicate variant text also used by gsm8k_1234_v02"
+    }
+  ],
+  "failure_breakdown": {
+    "CONSISTENCY": 5,
+    "DUPLICATE": 15,
+    "LEFTOVER_NAME": 50,
+    "SUBSTRING_ARTIFACT": 28
+  },
+  "items_with_failures": [
+    "gsm8k_0072",
+    "gsm8k_0127",
+    "gsm8k_0163",
+    "gsm8k_0236",
+    "gsm8k_0253",
+    "gsm8k_0260",
+    "gsm8k_0366",
+    "gsm8k_0376",
+    "gsm8k_0432",
+    "gsm8k_0590",
+    "gsm8k_0826",
+    "gsm8k_0907",
+    "gsm8k_0915",
+    "gsm8k_1010",
+    "gsm8k_1103",
+    "gsm8k_1157",
+    "gsm8k_1230",
+    "gsm8k_1234"
+  ],
+  "clean_items": [
+    "gsm8k_0006",
+    "gsm8k_0030",
+    "gsm8k_0055",
+    "gsm8k_0064",
+    "gsm8k_0083",
+    "gsm8k_0103",
+    "gsm8k_0125",
+    "gsm8k_0134",
+    "gsm8k_0178",
+    "gsm8k_0215",
+    "gsm8k_0247",
+    "gsm8k_0271",
+    "gsm8k_0277",
+    "gsm8k_0323",
+    "gsm8k_0334",
+    "gsm8k_0338",
+    "gsm8k_0344",
+    "gsm8k_0382",
+    "gsm8k_0388",
+    "gsm8k_0406",
+    "gsm8k_0437",
+    "gsm8k_0457",
+    "gsm8k_0470",
+    "gsm8k_0483",
+    "gsm8k_0508",
+    "gsm8k_0528",
+    "gsm8k_0663",
+    "gsm8k_0677",
+    "gsm8k_0686",
+    "gsm8k_0741",
+    "gsm8k_0789",
+    "gsm8k_0797",
+    "gsm8k_0869",
+    "gsm8k_0899",
+    "gsm8k_0947",
+    "gsm8k_0965",
+    "gsm8k_0979",
+    "gsm8k_1023",
+    "gsm8k_1108",
+    "gsm8k_1111",
+    "gsm8k_1128",
+    "gsm8k_1144",
+    "gsm8k_1150",
+    "gsm8k_1184",
+    "gsm8k_1203",
+    "gsm8k_1247",
+    "gsm8k_1278",
+    "gsm8k_1281",
+    "gsm8k_1287",
+    "gsm8k_1302",
+    "gsm8k_1312"
+  ]
+}

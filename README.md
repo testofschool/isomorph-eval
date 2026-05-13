@@ -7,7 +7,7 @@
 **A framework for generating verified benchmark variants via tau-isomorphism**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2606.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2606.XXXXX)
-[![Paper 1: EFSL](https://img.shields.io/badge/Paper_1-EFSL_(Kang_2026)-blue.svg)](https://arxiv.org/abs/XXXX.XXXXX)
+[![Paper 1: EFSL](https://img.shields.io/badge/Paper_1-EFSL_(Kang_2026)-blue.svg)](https://arxiv.org/abs/2605.11205)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776ab.svg)](https://www.python.org/)
 [![No GPU Required](https://img.shields.io/badge/GPU-not_required-brightgreen.svg)]()
@@ -29,16 +29,16 @@ We built a framework to detect benchmark contamination. Instead, we discovered t
 
 | | Before Verification | After Verification |
 |---|---|---|
-| **Apparent signal** | All 5 models show Delta ~ +0.42 | 3/5 invariant, 2/5 mild gap (Delta 0.04-0.11) |
+| **Apparent signal** | All 5 models show Delta ~ +0.42 | 4/5 invariant, 1/5 mild gap (Delta 0.04-0.11) |
 | **Interpretation** | "Universal contamination" | Perturbation sensitivity, not contamination |
-| **Negative control** | GPT-OSS 120B also "contaminated" | GPT-OSS 120B invariant (p = 0.174) |
-| **Root cause** | 41 of 100 items had wrong variant answers | Verified answers via forward graph execution |
+| **Comparison model** | GPT-OSS 120B also appeared "contaminated" | GPT-OSS 120B invariant (p = 0.090) |
+| **Root cause** | 41 of 100 items had wrong variant answers | Verified answers plus entity consistency audit |
 
 The lesson: **any benchmark variant generation pipeline must independently verify its answers**. Annotation-chain replay — substituting new values into the original solution chain — is unreliable.
 
-### Seven Bug Classes
+### Eight Bug Classes
 
-We identified seven distinct failure modes in annotation-chain replay:
+We identified eight distinct failure modes in annotation-chain replay and entity substitution:
 
 1. **Value conflation** — Same numeric value serves multiple semantic roles; mutation changes both uses in the graph but only one in the text
 2. **Phantom leaf values** — Solution chain introduces intermediate results as leaf nodes not present in the question
@@ -47,6 +47,7 @@ We identified seven distinct failure modes in annotation-chain replay:
 5. **Answer invariance** — Some graph structures produce the same answer regardless of leaf mutations
 6. **Partial name replacement** — Word-boundary-unaware replacement causes "Beth" to match inside "Bethany"
 7. **Node reuse** — Safety fallback promotes values appearing multiple times, reintroducing conflation
+8. **Inconsistent entity replacement** — Word-boundary-unaware replacement produces artifacts such as "Tommy" -> "Zaramy" and leaves original names behind
 
 ---
 
@@ -72,7 +73,7 @@ S -> G,V     G -> G'       G' -> S'        S' -> G'' ≅ G'
 
 ### Connection to EFSL
 
-In prior work ([EFSL](https://arxiv.org/abs/XXXX.XXXXX)), we showed that evaluation accuracy degrades as a function of data sparsity (S) and item difficulty heterogeneity (D). Contamination (C) represents a third axis: `1 - rho = f(S, D, C)`. IRT on verified isomorphic data addresses all three axes simultaneously.
+In prior work ([EFSL](https://arxiv.org/abs/2605.11205)), we showed that evaluation accuracy degrades as a function of data sparsity (S) and item difficulty heterogeneity (D). Contamination (C) represents a third axis: `1 - rho = f(S, D, C)`. IRT on verified isomorphic data addresses all three axes simultaneously.
 
 ---
 
@@ -82,7 +83,7 @@ In prior work ([EFSL](https://arxiv.org/abs/XXXX.XXXXX)), we showed that evaluat
 Delta_iso^IRT(M, B) = (1/N) Sum_i a_i * [P(X_i=1) - P(X_i'=1)]
 ```
 
-Weighted by IRT item discrimination `a_i`. Grounded in the psychometric Differential Item Functioning (DIF) framework. A positive delta may indicate memorization *or* perturbation sensitivity — the negative control disambiguates.
+Weighted by IRT item discrimination `a_i`. Grounded in the psychometric Differential Item Functioning (DIF) framework. A positive delta may indicate memorization *or* perturbation sensitivity; comparison models and disclosed training-data provenance help disambiguate.
 
 ### Diagnostic Archetypes
 
@@ -97,19 +98,19 @@ Weighted by IRT item discrimination `a_i`. Grounded in the psychometric Differen
 
 ## Results
 
-### Verified Results (N=69)
+### Entity-Clean Verified Results (N=63)
 
 | Model | N | Acc_orig | Acc_iso | Delta_iso [95% CI] | p | Archetype |
 |-------|---|----------|---------|-------------------|---|-----------|
-| Llama 3.1 8B | 69 | 95.7% | 84.4% | +0.113 [+0.049, +0.180] | 0.001** | Mild |
-| Llama 4 Scout 17B | 69 | 94.2% | 90.1% | +0.041 [-0.011, +0.099] | 0.169 | Inv |
-| Qwen3 32B | 45 | 100.0% | 94.0% | +0.060 [+0.009, +0.120] | 0.044* | Mild |
-| GPT-OSS 120B* | 13 | 100.0% | 95.2% | +0.048 [+0.000, +0.123] | 0.174 | Inv |
-| Llama 3.3 70B | 9 | 100.0% | 95.2% | +0.048 [+0.000, +0.133] | 0.320 | Inv |
+| Llama 3.1 8B | 63 | 95.2% | 83.8% | +0.114 [+0.043, +0.183] | 0.003** | Mild |
+| Llama 4 Scout 17B | 63 | 93.7% | 89.0% | +0.047 [-0.012, +0.108] | 0.106 | Inv |
+| Qwen3 32B | 43 | 100.0% | 95.9% | +0.041 [+0.000, +0.103] | 0.054 | Inv |
+| GPT-OSS 120B* | 18 | 100.0% | 96.4% | +0.036 [+0.000, +0.089] | 0.090 | Inv |
+| Llama 3.3 70B | 12 | 100.0% | 96.3% | +0.037 [+0.000, +0.100] | 0.500 | Inv |
 
-*GPT-OSS 120B serves as a negative control (no GSM8K in training data).
+*GPT-OSS 120B serves as a comparison model; its training data composition is not fully disclosed.
 
-Three of five models show no significant performance gap between originals and variants. Llama 3.1 8B and Qwen3 32B show mild gaps consistent with known numeric perturbation sensitivity (GSM-Symbolic reports up to 15pp baseline).
+Four of five models show no significant performance gap between originals and variants. Llama 3.1 8B shows a mild gap consistent with known numeric perturbation sensitivity.
 
 ![Pre/Post Verification Comparison](figures/fig1_pre_post_comparison.png)
 *Figure 1: The effect of answer verification. Left: all models appear uniformly contaminated (Delta ~ +0.42). Right: after verification, the signal collapses.*
@@ -121,35 +122,24 @@ Three of five models show no significant performance gap between originals and v
 
 ## Quickstart
 
-### Installation
-
 ```bash
-pip install numpy scipy pydantic openai matplotlib
-git clone https://github.com/testofschool/isomorph-eval.git
-cd isomorph-eval
-```
+# Install dependencies
+pip install numpy scipy pydantic matplotlib
 
-### Run the Evaluation
+# Verify variant answers (reproduces Section 4.2 verification audit)
+python verify_answers.py
 
-```bash
-# Against any OpenAI-compatible endpoint
-python api_runner.py \
-  --model meta-llama/Llama-3.3-70B-Instruct \
-  --base-url https://api.together.xyz/v1 \
-  --api-key $TOGETHER_API_KEY \
-  --dataset data/eval_verified_v2.json \
-  --trials 5 --concurrency 20 --output results.json
+# Run entity consistency check (reproduces entity audit)
+python verify_entities.py --input data/eval_verified_v3.json
 
-# Against local vLLM
-python api_runner.py \
-  --model meta-llama/Llama-3.3-70B-Instruct \
-  --base-url http://localhost:8000/v1 \
-  --dataset data/eval_verified_v2.json
-```
+# Run model evaluation (requires Groq API key)
+export GROQ_API_KEY="your-key-here"
+python run_eval_v3.py --dataset data/eval_verified_v3.json
 
-### Generate Figures
+# Recalculate Table 2 from evaluation results
+python recalculate_table2.py
 
-```bash
+# Generate figures
 python plot_results.py --output figures/
 ```
 
@@ -159,16 +149,24 @@ python plot_results.py --output figures/
 
 ```
 isomorph-eval/
-├── api_runner.py              # Async evaluation runner
-├── plot_results.py            # Publication figure generator
 ├── generate_eval_dataset_v2.py # Variant generation pipeline
-├── rescore_v2.py              # Result rescoring on verified data
+├── verify_answers.py          # Independent arithmetic verification
+├── verify_entities.py         # Entity consistency audit
+├── create_v3_dataset.py       # Builds entity-clean v3 dataset
+├── recalculate_table2.py      # Recomputes Table 2 from existing results
+├── run_eval_v3.py             # Model evaluation runner
+├── aggregate_results.py       # Aggregates evaluation outputs
+├── plot_results.py            # Publication figure generator
 ├── core/
 │   ├── data_structures.py     # ReasoningGraph, tau-isomorphism types
 │   ├── gsm8k_parser.py        # GSM8K annotation parser
 │   └── pipeline.py            # Mutator, Generator, Verifier
 ├── data/
-│   ├── eval_verified_v2.json  # Verified dataset (69 items)
+│   ├── eval_verified_v2.json  # Arithmetic-verified dataset (69 items)
+│   ├── eval_verified_v3.json  # Entity-clean verified dataset (63 items)
+│   ├── entity_audit_results.json
+│   ├── entity_audit_v3_results.json
+│   ├── table2_v3.json
 │   └── eval_subset_100.json   # Full 100-item subset (pre-verification)
 ├── paper/
 │   ├── main.tex               # Paper source
@@ -191,8 +189,8 @@ isomorph-eval/
 | Verified variant answers | No | No | No | Forward graph execution |
 | IRT difficulty correction | No | No | No | 2PL DIF |
 | Scalable generation | Fixed 1,250 | No | Templates | Arbitrary scale |
-| Bug taxonomy | No | No | No | 7 classes documented |
-| Negative control | No | No | No | GPT-OSS 120B |
+| Bug taxonomy | No | No | No | 8 classes documented |
+| Comparison model | No | No | No | GPT-OSS 120B |
 | Black-box compatible | Yes | Yes | Yes | Yes |
 
 ---
@@ -201,7 +199,7 @@ isomorph-eval/
 
 1. **tau-isomorphism**: A verifiable graph-theoretic condition for benchmark item equivalence
 2. **Isomorphic Engine**: Four-stage pipeline producing unlimited verified variants with automatically computed answers
-3. **Seven bug classes**: Taxonomy of annotation-chain replay failures that produce false contamination signals
+3. **Eight bug classes**: Taxonomy of annotation-chain replay and entity-replacement failures that produce false contamination signals
 4. **Empirical evidence**: On verified data, current LLMs show robust reasoning transfer to novel numeric contexts
 5. **Delta_iso metric**: DIF-based perturbation sensitivity metric with IRT discrimination weighting
 
@@ -225,7 +223,7 @@ isomorph-eval/
          and How Item Response Theory Recovers Ground Truth
          Across Domains},
   author={Kang, Jung Min},
-  journal={arXiv preprint arXiv:2505.XXXXX},
+  journal={arXiv preprint arXiv:2605.11205},
   year={2026}
 }
 ```

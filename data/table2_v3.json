@@ -1,0 +1,1475 @@
+{
+  "dataset": "data/eval_verified_v3.json",
+  "n_dataset_items": 63,
+  "n_dataset_variants": 290,
+  "models": {
+    "Llama 3.1 8B": {
+      "n": 63,
+      "n_variants": 290,
+      "acc_orig": 0.9523809523809523,
+      "acc_iso": 0.8379310344827586,
+      "delta_iso": 0.1144499178981937,
+      "ci_95": [
+        0.04338624338624339,
+        0.18281084656084645
+      ],
+      "p_value": 0.0025641755376737767,
+      "archetype": "Mild",
+      "per_item": [
+        {
+          "item_id": "gsm8k_0006",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0030",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0055",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0064",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0072",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0083",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0103",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0125",
+          "p_orig": 1.0,
+          "p_iso": 0.6,
+          "delta": 0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0127",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0134",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0163",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0178",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0215",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0236",
+          "p_orig": 0.0,
+          "p_iso": 0.25,
+          "delta": -0.25,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0271",
+          "p_orig": 1.0,
+          "p_iso": 0.6,
+          "delta": 0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0277",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0323",
+          "p_orig": 1.0,
+          "p_iso": 0.25,
+          "delta": 0.75,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0334",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0338",
+          "p_orig": 1.0,
+          "p_iso": 0.6,
+          "delta": 0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0344",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0366",
+          "p_orig": 1.0,
+          "p_iso": 0.2,
+          "delta": 0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0376",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0382",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0388",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0406",
+          "p_orig": 0.0,
+          "p_iso": 0.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0432",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0437",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0457",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0470",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0483",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0508",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0528",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0663",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0677",
+          "p_orig": 1.0,
+          "p_iso": 0.2,
+          "delta": 0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0686",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0741",
+          "p_orig": 1.0,
+          "p_iso": 0.4,
+          "delta": 0.6,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0789",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0797",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0826",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 2
+        },
+        {
+          "item_id": "gsm8k_0869",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0899",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0947",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0965",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0979",
+          "p_orig": 1.0,
+          "p_iso": 0.2,
+          "delta": 0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1010",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1023",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1103",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_1108",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1111",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1128",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1144",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1150",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1184",
+          "p_orig": 1.0,
+          "p_iso": 0.6666666666666666,
+          "delta": 0.33333333333333337,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_1203",
+          "p_orig": 0.0,
+          "p_iso": 0.8,
+          "delta": -0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1230",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1234",
+          "p_orig": 1.0,
+          "p_iso": 0.25,
+          "delta": 0.75,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1278",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1281",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1287",
+          "p_orig": 1.0,
+          "p_iso": 0.0,
+          "delta": 1.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1302",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1312",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        }
+      ]
+    },
+    "Llama 4 Scout 17B": {
+      "n": 63,
+      "n_variants": 290,
+      "acc_orig": 0.9365079365079365,
+      "acc_iso": 0.8896551724137931,
+      "delta_iso": 0.046852764094143406,
+      "ci_95": [
+        -0.011904761904761908,
+        0.10793650793650791
+      ],
+      "p_value": 0.10595686836227264,
+      "archetype": "Inv",
+      "per_item": [
+        {
+          "item_id": "gsm8k_0006",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0030",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0055",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0064",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0072",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0083",
+          "p_orig": 0.0,
+          "p_iso": 0.4,
+          "delta": -0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0103",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0125",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0127",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0134",
+          "p_orig": 1.0,
+          "p_iso": 0.2,
+          "delta": 0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0163",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0178",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0215",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0236",
+          "p_orig": 1.0,
+          "p_iso": 0.0,
+          "delta": 1.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0271",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0277",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0323",
+          "p_orig": 1.0,
+          "p_iso": 0.75,
+          "delta": 0.25,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0334",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0338",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0344",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0366",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0376",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0382",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0388",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0406",
+          "p_orig": 0.0,
+          "p_iso": 0.2,
+          "delta": -0.2,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0432",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0437",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0457",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0470",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0483",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0508",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0528",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0663",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0677",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0686",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0741",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0789",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0797",
+          "p_orig": 0.0,
+          "p_iso": 0.4,
+          "delta": -0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0826",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 2
+        },
+        {
+          "item_id": "gsm8k_0869",
+          "p_orig": 1.0,
+          "p_iso": 0.2,
+          "delta": 0.8,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0899",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0947",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0965",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0979",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1010",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1023",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1103",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_1108",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1111",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1128",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1144",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1150",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1184",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_1203",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1230",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1234",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1278",
+          "p_orig": 0.0,
+          "p_iso": 0.2,
+          "delta": -0.2,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1281",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1287",
+          "p_orig": 1.0,
+          "p_iso": 0.0,
+          "delta": 1.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1302",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1312",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        }
+      ]
+    },
+    "Qwen3 32B": {
+      "n": 43,
+      "n_variants": 194,
+      "acc_orig": 1.0,
+      "acc_iso": 0.9587628865979382,
+      "delta_iso": 0.04123711340206182,
+      "ci_95": [
+        0.0,
+        0.10348837209302326
+      ],
+      "p_value": 0.054404715020272845,
+      "archetype": "Inv",
+      "per_item": [
+        {
+          "item_id": "gsm8k_0055",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0125",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0163",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0215",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0236",
+          "p_orig": 1.0,
+          "p_iso": 0.0,
+          "delta": 1.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0271",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0277",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0323",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0334",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0338",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0344",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0366",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0376",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0388",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0432",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0437",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0457",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0470",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0483",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0677",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0686",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0741",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0789",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0826",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 2
+        },
+        {
+          "item_id": "gsm8k_0899",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_0947",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0979",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1010",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1023",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1103",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_1108",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1111",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1128",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1144",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1150",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1230",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1234",
+          "p_orig": 1.0,
+          "p_iso": 0.75,
+          "delta": 0.25,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1281",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1287",
+          "p_orig": 1.0,
+          "p_iso": 0.4,
+          "delta": 0.6,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1302",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1312",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        }
+      ]
+    },
+    "GPT-OSS 120B": {
+      "n": 18,
+      "n_variants": 83,
+      "acc_orig": 1.0,
+      "acc_iso": 0.963855421686747,
+      "delta_iso": 0.03614457831325302,
+      "ci_95": [
+        0.0,
+        0.08888888888888889
+      ],
+      "p_value": 0.08985624743949988,
+      "archetype": "Inv",
+      "per_item": [
+        {
+          "item_id": "gsm8k_0055",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0125",
+          "p_orig": 1.0,
+          "p_iso": 0.6,
+          "delta": 0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0163",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0271",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0277",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0334",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0344",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0366",
+          "p_orig": 1.0,
+          "p_iso": 0.8,
+          "delta": 0.19999999999999996,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0388",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0437",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0470",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0789",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1010",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1111",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1128",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1230",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_1312",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        }
+      ]
+    },
+    "Llama 3.3 70B": {
+      "n": 12,
+      "n_variants": 54,
+      "acc_orig": 1.0,
+      "acc_iso": 0.9629629629629629,
+      "delta_iso": 0.03703703703703709,
+      "ci_95": [
+        0.0,
+        0.10000000000000002
+      ],
+      "p_value": 0.5,
+      "archetype": "Inv",
+      "per_item": [
+        {
+          "item_id": "gsm8k_0055",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0163",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0271",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0277",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 3
+        },
+        {
+          "item_id": "gsm8k_0334",
+          "p_orig": 1.0,
+          "p_iso": 0.6,
+          "delta": 0.4,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0344",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0388",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0437",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0470",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        },
+        {
+          "item_id": "gsm8k_0789",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1010",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 4
+        },
+        {
+          "item_id": "gsm8k_1247",
+          "p_orig": 1.0,
+          "p_iso": 1.0,
+          "delta": 0.0,
+          "n_variants": 5
+        }
+      ]
+    }
+  }
+}

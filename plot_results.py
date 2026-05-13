@@ -59,7 +59,7 @@ def set_publication_style():
 COLORS = {
     "pre":       "#D64933",  # vermillion — unverified/broken
     "post":      "#2E86AB",  # steel blue — verified/clean
-    "control":   "#1B998B",  # teal — negative control
+    "control":   "#1B998B",  # teal — comparison model
     "mild":      "#E8963E",  # amber — mild gap
     "invariant": "#2E7D32",  # green — invariant
     "grid":      "#CCCCCC",
@@ -93,18 +93,41 @@ def load_pre_verification_data():
 
 
 def load_post_verification_data():
-    """Load post-verification results (69 verified items)."""
+    """Load post-verification results from the v3 recalculation."""
+    table_path = SCRIPT_DIR / "data" / "table2_v3.json"
+    if table_path.exists():
+        with open(table_path) as f:
+            table = json.load(f)["models"]
+        label_map = {
+            "Llama 3.1 8B": "Llama 3.1 8B",
+            "Llama 4 Scout 17B": "Scout 17B",
+            "Qwen3 32B": "Qwen3 32B",
+            "GPT-OSS 120B": "GPT-OSS 120B*",
+            "Llama 3.3 70B": "Llama 3.3 70B",
+        }
+        return [
+            {
+                "model_short": label_map[name],
+                "delta_raw": row["delta_iso"],
+                "acc_orig": row["acc_orig"],
+                "acc_iso": row["acc_iso"],
+                "n_items": row["n"],
+                "p": row["p_value"],
+                "archetype": row["archetype"].upper(),
+            }
+            for name, row in table.items()
+        ]
     return [
-        {"model_short": "Llama 3.1 8B",   "delta_raw": 0.113, "acc_orig": 0.957,
-         "acc_iso": 0.844, "n_items": 69, "p": 0.001, "archetype": "MILD"},
-        {"model_short": "Scout 17B",       "delta_raw": 0.041, "acc_orig": 0.942,
-         "acc_iso": 0.901, "n_items": 69, "p": 0.169, "archetype": "INV"},
-        {"model_short": "Qwen3 32B",       "delta_raw": 0.060, "acc_orig": 1.000,
-         "acc_iso": 0.940, "n_items": 45, "p": 0.044, "archetype": "MILD"},
-        {"model_short": "GPT-OSS 120B*",   "delta_raw": 0.048, "acc_orig": 1.000,
-         "acc_iso": 0.952, "n_items": 13, "p": 0.174, "archetype": "INV"},
-        {"model_short": "Llama 3.3 70B",   "delta_raw": 0.048, "acc_orig": 1.000,
-         "acc_iso": 0.952, "n_items": 9,  "p": 0.320, "archetype": "INV"},
+        {"model_short": "Llama 3.1 8B",   "delta_raw": 0.114, "acc_orig": 0.952,
+         "acc_iso": 0.838, "n_items": 63, "p": 0.003, "archetype": "MILD"},
+        {"model_short": "Scout 17B",       "delta_raw": 0.047, "acc_orig": 0.937,
+         "acc_iso": 0.890, "n_items": 63, "p": 0.106, "archetype": "INV"},
+        {"model_short": "Qwen3 32B",       "delta_raw": 0.041, "acc_orig": 1.000,
+         "acc_iso": 0.959, "n_items": 43, "p": 0.054, "archetype": "INV"},
+        {"model_short": "GPT-OSS 120B*",   "delta_raw": 0.036, "acc_orig": 1.000,
+         "acc_iso": 0.964, "n_items": 18, "p": 0.090, "archetype": "INV"},
+        {"model_short": "Llama 3.3 70B",   "delta_raw": 0.037, "acc_orig": 1.000,
+         "acc_iso": 0.963, "n_items": 12, "p": 0.500, "archetype": "INV"},
     ]
 
 
@@ -196,7 +219,7 @@ def plot_pre_post_comparison(output_path: str, figsize=(6.5, 3.5)):
 
     ax2.set_xticks(x)
     ax2.set_xticklabels(models, rotation=30, ha="right", fontsize=7)
-    ax2.set_title("B. After Verification\n(69 verified items)",
+    ax2.set_title("B. After Verification\n(63 entity-clean items)",
                   fontweight="bold", fontsize=9, color=COLORS["post"])
 
     # Legend
@@ -204,7 +227,7 @@ def plot_pre_post_comparison(output_path: str, figsize=(6.5, 3.5)):
     legend_elements = [
         Patch(facecolor=COLORS["post"], label="Invariant ($p > 0.05$)"),
         Patch(facecolor=COLORS["mild"], label="Mild gap ($p < 0.05$)"),
-        Patch(facecolor=COLORS["control"], label="Negative control"),
+        Patch(facecolor=COLORS["control"], label="Comparison"),
     ]
     ax2.legend(handles=legend_elements, loc="upper right", fontsize=6.5,
                framealpha=0.9, edgecolor="#CCCCCC")

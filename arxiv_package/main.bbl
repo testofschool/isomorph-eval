@@ -1,0 +1,96 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cobbe et~al.(2021)Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser,
+  Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman]{cobbe2021gsm8k}
+Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz
+  Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano,
+  Christopher Hesse, and John Schulman.
+\newblock Training verifiers to solve math word problems.
+\newblock \emph{arXiv preprint arXiv:2110.14168}, 2021.
+
+\bibitem[Cordella et~al.(2004)Cordella, Foggia, Sansone, and
+  Vento]{cordella2004vf2}
+Luigi~P. Cordella, Pasquale Foggia, Carlo Sansone, and Mario Vento.
+\newblock A (sub)graph isomorphism algorithm for matching large graphs.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 26\penalty0 (10):\penalty0 1367--1372, 2004.
+
+\bibitem[Dekoninck et~al.(2024)Dekoninck, Müller, Fischer, Von~Burg, and
+  Vechev]{dekoninck2024constat}
+Jasper Dekoninck, Mark~Niklas Müller, Martin Fischer, Luca Von~Burg, and
+  Martin Vechev.
+\newblock {ConStat}: Performance-based contamination detection in large
+  language models.
+\newblock In \emph{NeurIPS}, 2024.
+
+\bibitem[Holland and Wainer(1993)]{holland1993}
+Paul~W. Holland and Howard Wainer.
+\newblock \emph{Differential Item Functioning}.
+\newblock Lawrence Erlbaum Associates, 1993.
+
+\bibitem[Kang(2026)]{kang2026efsl}
+Jung~Min Kang.
+\newblock The scaling law of evaluation failure: Why simple averaging collapses
+  under data sparsity and item difficulty gaps, and how item response theory
+  recovers ground truth across domains.
+\newblock \emph{arXiv preprint arXiv:2605.11205}, 2026.
+
+\bibitem[Lord(1980)]{lord1980}
+Frederic~M. Lord.
+\newblock \emph{Applications of Item Response Theory to Practical Testing
+  Problems}.
+\newblock Lawrence Erlbaum Associates, 1980.
+
+\bibitem[Luo et~al.(2025)Luo, Wu, Frisch, and He]{luo2025medirt}
+Zhimeng Luo, Lixin Wu, Adam Frisch, and Daqing He.
+\newblock Beyond overall accuracy: A psychometric deep dive into the
+  topic-specific medical capabilities of 80 large language models.
+\newblock \emph{arXiv preprint arXiv:2509.24186}, 2025.
+
+\bibitem[Mirzadeh et~al.(2024)Mirzadeh, Alizadeh, Shahrokhi, Tuzel, Bengio, and
+  Farajtabar]{mirzadeh2024gsmsymbolic}
+Iman Mirzadeh, Keivan Alizadeh, Hooman Shahrokhi, Oncel Tuzel, Samy Bengio, and
+  Mehrdad Farajtabar.
+\newblock {GSM-Symbolic}: Understanding the limitations of mathematical
+  reasoning in large language models.
+\newblock \emph{arXiv preprint arXiv:2410.05229}, 2024.
+
+\bibitem[Qian et~al.(2024)Qian, Wan, Tang, Wang, Zhang, Chen, and
+  Yu]{qian2024varbench}
+Kun Qian, Shunji Wan, Claudia Tang, Youzhi Wang, Xuanming Zhang, Maximillian
+  Chen, and Zhou Yu.
+\newblock {VarBench}: Robust language model benchmarking through dynamic
+  variable perturbation.
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  EMNLP 2024}, pages 16131--16161, 2024.
+
+\bibitem[Zhang et~al.(2024)Zhang, Da, Lee, Robinson, Wu, Song, Zhao, Raja,
+  Slack, Luo, et~al.]{zhang2024gsm1k}
+Hugh Zhang, Jeff Da, Dean Lee, Vaughn Robinson, Catherine Wu, Will Song,
+  Tiffany Zhao, Pranav Raja, Dylan Slack, Qin Luo, et~al.
+\newblock {GSM1K}: A natural, scalable, and hard-to-contaminate evaluation for
+  math reasoning.
+\newblock In \emph{NeurIPS Datasets and Benchmarks Track}, 2024.
+
+\bibitem[Zhao et~al.(2024)Zhao, Huang, Lv, Cui, and Wei]{mmlucf2024}
+Qihao Zhao, Yangyu Huang, Tengchao Lv, Lei Cui, and Furu Wei.
+\newblock {MMLU-CF}: A contamination-free multi-task language understanding
+  benchmark.
+\newblock \emph{arXiv preprint arXiv:2412.15194}, 2024.
+
+\bibitem[Zhou et~al.(2026)Zhou, Huang, Zhao, Han, Wang, Chen, Yang, Bao, Dong,
+  Xu, Zhu, Cao, and Zhao]{zhou2026psnirt}
+Hongli Zhou, Hui Huang, Ziqing Zhao, Lvyuan Han, Huicheng Wang, Kehai Chen,
+  Muyun Yang, Wei Bao, Jian Dong, Bing Xu, Conghui Zhu, Hailong Cao, and Tiejun
+  Zhao.
+\newblock Lost in benchmarks? rethinking large language model benchmarking with
+  item response theory.
+\newblock In \emph{AAAI}, 2026.
+\newblock arXiv:2505.15055.
+
+\end{thebibliography}
