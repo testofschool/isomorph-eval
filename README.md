@@ -198,7 +198,7 @@ isomorph-eval/
 ## Contributions
 
 1. **tau-isomorphism**: A verifiable graph-theoretic condition for benchmark item equivalence
-2. **Isomorphic Engine**: Four-stage pipeline producing unlimited verified variants with automatically computed answers
+2. **Isomorphic Engine**: Four-stage pipeline producing multiple verified variants per successfully parsed item with automatically computed answers
 3. **Eight bug classes**: Taxonomy of annotation-chain replay and entity-replacement failures that produce false contamination signals
 4. **Empirical evidence**: On verified data, current LLMs show robust reasoning transfer to novel numeric contexts
 5. **Delta_iso metric**: DIF-based perturbation sensitivity metric with IRT discrimination weighting

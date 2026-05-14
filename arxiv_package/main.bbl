@@ -77,8 +77,10 @@ Hugh Zhang, Jeff Da, Dean Lee, Vaughn Robinson, Catherine Wu, Will Song,
   math reasoning.
 \newblock In \emph{NeurIPS Datasets and Benchmarks Track}, 2024.
 
-\bibitem[Zhao et~al.(2025)Zhao, Huang, Lv, Cui, and Wei]{mmlucf2024}
-Qihao Zhao, Yangyu Huang, Tengchao Lv, Lei Cui, and Furu Wei.
+\bibitem[Zhao et~al.(2025)Zhao, Huang, Lv, Cui, Sun, Mao, Zhang, Xin, Yin, Li,
+  and Wei]{mmlucf2024}
+Qihao Zhao, Yangyu Huang, Tengchao Lv, Lei Cui, Qinzheng Sun, Shaoguang Mao,
+  Xin Zhang, Ying Xin, Qiufeng Yin, Scarlett Li, and Furu Wei.
 \newblock {MMLU-CF}: A contamination-free multi-task language understanding
   benchmark.
 \newblock In \emph{ACL}, 2025.

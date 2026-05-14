@@ -36,8 +36,8 @@ structurally equivalent benchmark variants via \emph{$\tau$-isomorphism},
 a graph-theoretic definition that preserves operation types, dependency
 structure, and complexity weights while ensuring complete surface
 novelty. The framework's four-stage pipeline (Parser $\to$ Mutator
-$\to$ Generator $\to$ Verifier) produces unlimited verified variants
-of existing benchmark items with automatically computed answers.
+$\to$ Generator $\to$ Verifier) produces multiple verified variants
+per successfully parsed item with automatically computed answers.
 
 Applying Isomorph-Eval to GSM8K, we discover that
 \emph{annotation-chain replay}---the standard approach to computing
@@ -75,7 +75,8 @@ structurally equivalent benchmark variants grounded in a formal
 definition of $\tau$-isomorphism. The framework makes four
 contributions: (1)~$\tau$-isomorphism formalizes structural equivalence
 via graph-theoretic invariants; (2)~the Isomorphic Engine generates
-unlimited verified variants with automatically computed answers;
+multiple verified variants per parsed item with automatically
+computed answers;
 (3)~the identification of eight bug classes in annotation-chain replay
 that produce false contamination signals; and (4)~empirical evidence
 that on verified data, current LLMs show robust reasoning transfer to

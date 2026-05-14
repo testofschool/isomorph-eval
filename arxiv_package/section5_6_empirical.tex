@@ -41,6 +41,10 @@ prompting and \verb|\boxed{}| answer extraction, with fallback to
 Qwen3, GPT-OSS, and Llama~70B were partially evaluated due to API
 daily token limits; Llama~8B and Scout completed full evaluation on
 all items.
+We note that Qwen3's model card recommends non-greedy decoding
+(temperature 0.6) for thinking mode; our uniform greedy protocol may
+understate Qwen3's optimal performance but ensures cross-model
+comparability.
 
 \subsection{Protocol}
 Each model receives every original item and every variant item exactly
@@ -197,7 +201,10 @@ post-hoc entity audit then identified 18 items with entity-level
 failures; 8 were retained after trimming failing duplicate variants,
 4 were repaired by word-boundary-aware replacement, and 6 were
 quarantined. The final v3 dataset contains \textbf{63 entity-clean
-items}.
+items}. The entity audit verifies name-level consistency (no leftover
+original proper nouns, no substring artifacts, no duplicate variant
+texts); it does not check pronoun--entity coreference agreement, which
+we leave to future surface-quality improvements.
 
 
 % ------------------------------------------------------------------
@@ -255,7 +262,7 @@ zero (right).
 mode near $\delta \approx 0.8$ from items with broken variant
 answers. \textbf{Right:} Post-verification (v2, $N{=}69$ pre-entity-audit)---concentrated near zero,
 with 40 of 59 verified items at $\delta = 0$ (perfect transfer).
-The final entity-clean dataset (v3, $N{=}63$) used in Table~\ref{tab:main_results}
+The final entity-clean dataset (v3, $N{=}63$) used in Table~\ref{tab:main}
 applies additional entity-consistency filtering.}
 \label{fig:delta_dist}
 \end{figure*}
