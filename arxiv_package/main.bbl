@@ -20,10 +20,9 @@ Luigi~P. Cordella, Pasquale Foggia, Carlo Sansone, and Mario Vento.
 \newblock \emph{IEEE Transactions on Pattern Analysis and Machine
   Intelligence}, 26\penalty0 (10):\penalty0 1367--1372, 2004.
 
-\bibitem[Dekoninck et~al.(2024)Dekoninck, Müller, Fischer, Von~Burg, and
+\bibitem[Dekoninck et~al.(2024)Dekoninck, Müller, and
   Vechev]{dekoninck2024constat}
-Jasper Dekoninck, Mark~Niklas Müller, Martin Fischer, Luca Von~Burg, and
-  Martin Vechev.
+Jasper Dekoninck, Mark~Niklas Müller, and Martin Vechev.
 \newblock {ConStat}: Performance-based contamination detection in large
   language models.
 \newblock In \emph{NeurIPS}, 2024.
@@ -39,6 +38,7 @@ Jung~Min Kang.
   under data sparsity and item difficulty gaps, and how item response theory
   recovers ground truth across domains.
 \newblock \emph{arXiv preprint arXiv:2605.11205}, 2026.
+\newblock Zenodo: \url{https://doi.org/10.5281/zenodo.20115827}.
 
 \bibitem[Lord(1980)]{lord1980}
 Frederic~M. Lord.
@@ -52,13 +52,13 @@ Zhimeng Luo, Lixin Wu, Adam Frisch, and Daqing He.
   topic-specific medical capabilities of 80 large language models.
 \newblock \emph{arXiv preprint arXiv:2509.24186}, 2025.
 
-\bibitem[Mirzadeh et~al.(2024)Mirzadeh, Alizadeh, Shahrokhi, Tuzel, Bengio, and
+\bibitem[Mirzadeh et~al.(2025)Mirzadeh, Alizadeh, Shahrokhi, Tuzel, Bengio, and
   Farajtabar]{mirzadeh2024gsmsymbolic}
 Iman Mirzadeh, Keivan Alizadeh, Hooman Shahrokhi, Oncel Tuzel, Samy Bengio, and
   Mehrdad Farajtabar.
 \newblock {GSM-Symbolic}: Understanding the limitations of mathematical
   reasoning in large language models.
-\newblock \emph{arXiv preprint arXiv:2410.05229}, 2024.
+\newblock In \emph{ICLR}, 2025.
 
 \bibitem[Qian et~al.(2024)Qian, Wan, Tang, Wang, Zhang, Chen, and
   Yu]{qian2024varbench}
@@ -77,11 +77,11 @@ Hugh Zhang, Jeff Da, Dean Lee, Vaughn Robinson, Catherine Wu, Will Song,
   math reasoning.
 \newblock In \emph{NeurIPS Datasets and Benchmarks Track}, 2024.
 
-\bibitem[Zhao et~al.(2024)Zhao, Huang, Lv, Cui, and Wei]{mmlucf2024}
+\bibitem[Zhao et~al.(2025)Zhao, Huang, Lv, Cui, and Wei]{mmlucf2024}
 Qihao Zhao, Yangyu Huang, Tengchao Lv, Lei Cui, and Furu Wei.
 \newblock {MMLU-CF}: A contamination-free multi-task language understanding
   benchmark.
-\newblock \emph{arXiv preprint arXiv:2412.15194}, 2024.
+\newblock In \emph{ACL}, 2025.
 
 \bibitem[Zhou et~al.(2026)Zhou, Huang, Zhao, Han, Wang, Chen, Yang, Bao, Dong,
   Xu, Zhu, Cao, and Zhao]{zhou2026psnirt}
