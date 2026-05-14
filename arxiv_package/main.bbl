@@ -48,8 +48,8 @@ Frederic~M. Lord.
 
 \bibitem[Luo et~al.(2025)Luo, Wu, Frisch, and He]{luo2025medirt}
 Zhimeng Luo, Lixin Wu, Adam Frisch, and Daqing He.
-\newblock Beyond overall accuracy: A psychometric deep dive into the
-  topic-specific medical capabilities of 80 large language models.
+\newblock Measuring competency, not performance: Item-aware evaluation across
+  medical benchmarks.
 \newblock \emph{arXiv preprint arXiv:2509.24186}, 2025.
 
 \bibitem[Mirzadeh et~al.(2025)Mirzadeh, Alizadeh, Shahrokhi, Tuzel, Bengio, and
