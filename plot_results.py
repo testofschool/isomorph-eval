@@ -18,8 +18,13 @@ import os
 from pathlib import Path
 
 import numpy as np
-import matplotlib
-matplotlib.use("Agg")
+import matplotlib as mpl
+mpl.rcParams["pdf.fonttype"] = 42
+mpl.rcParams["ps.fonttype"] = 42
+mpl.rcParams["font.family"] = "serif"
+mpl.rcParams["mathtext.fontset"] = "dejavuserif"
+mpl.rcParams["pdf.compression"] = 0
+mpl.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from matplotlib.colors import LinearSegmentedColormap
@@ -34,7 +39,10 @@ def set_publication_style():
     plt.rcParams.update({
         "font.family": "serif",
         "font.serif": ["Times New Roman", "DejaVu Serif", "serif"],
-        "mathtext.fontset": "cm",
+        "mathtext.fontset": "dejavuserif",
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
+        "pdf.compression": 0,
         "font.size": 9,
         "axes.titlesize": 10,
         "axes.labelsize": 9,
@@ -180,8 +188,14 @@ def plot_pre_post_comparison(output_path: str, figsize=(6.5, 3.5)):
 
     ax1.axhline(y=0.42, color=COLORS["pre"], linestyle="--", linewidth=0.8,
                 alpha=0.6, zorder=2)
-    ax1.text(len(models) - 0.5, 0.435, r"mean $\Delta \approx +0.42$",
-             fontsize=7, color=COLORS["pre"], ha="right", style="italic")
+    ax1.annotate(r"mean $\Delta \approx +0.42$",
+                 xy=(2, 0.42), xytext=(2, 0.525),
+                 ha="center", va="center", fontsize=7,
+                 color=COLORS["pre"], style="italic",
+                 bbox=dict(boxstyle="round,pad=0.3", fc="white",
+                           ec="#999999", alpha=0.9, linewidth=0.5),
+                 arrowprops=dict(arrowstyle="-|>", color=COLORS["pre"],
+                                 lw=0.7, alpha=0.7))
 
     ax1.set_xticks(x)
     ax1.set_xticklabels(models, rotation=30, ha="right", fontsize=7)
@@ -237,8 +251,10 @@ def plot_pre_post_comparison(output_path: str, figsize=(6.5, 3.5)):
         fontweight="bold", fontsize=10, y=1.02)
 
     plt.tight_layout()
+    metadata = {"Title": "The effect of answer verification on apparent Delta_iso"}
     for ext in ["pdf", "png"]:
-        fig.savefig(output_path.replace(".pdf", f".{ext}"), dpi=300)
+        fig.savefig(output_path.replace(".pdf", f".{ext}"), dpi=300,
+                    metadata=metadata)
     plt.close(fig)
     print(f"  Figure 1 saved: {output_path}")
 
