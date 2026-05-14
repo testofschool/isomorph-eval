@@ -253,8 +253,10 @@ zero (right).
 \caption{Per-item $\delta_i$ distributions for Llama~3.1~8B.
 \textbf{Left:} Pre-verification---bimodal distribution with a second
 mode near $\delta \approx 0.8$ from items with broken variant
-answers. \textbf{Right:} Post-verification---concentrated near zero,
-with 40 of 59 items at $\delta = 0$ (perfect transfer).}
+answers. \textbf{Right:} Post-verification (v2, $N{=}69$ pre-entity-audit)---concentrated near zero,
+with 40 of 59 verified items at $\delta = 0$ (perfect transfer).
+The final entity-clean dataset (v3, $N{=}63$) used in Table~\ref{tab:main_results}
+applies additional entity-consistency filtering.}
 \label{fig:delta_dist}
 \end{figure*}
 
