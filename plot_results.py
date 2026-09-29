@@ -270,17 +270,13 @@ def plot_delta_distribution(output_path: str, figsize=(6.5, 3.0)):
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize, sharey=True)
 
-    # Pre-verification: simulate the bimodal distribution
-    # Items with broken answers had delta ~ 1.0 (model correct, answer wrong)
-    # Items with correct answers had delta ~ 0.0
-    np.random.seed(42)
-    n_broken = 41
-    n_clean = 59
-    pre_deltas_broken = np.clip(np.random.normal(0.8, 0.2, n_broken), 0, 1)
-    pre_deltas_clean = np.clip(np.random.normal(0.05, 0.15, n_clean), -0.5, 1)
-    pre_deltas = np.concatenate([pre_deltas_broken, pre_deltas_clean])
+    # Pre-verification: observed per-item deltas for Llama 3.1 8B on the
+    # original 100-item set (results/phase_c_statistics.json). No simulation.
+    with open(RESULTS_DIR / "phase_c_statistics.json") as f:
+        phase_c = json.load(f)
+    pre_deltas = np.asarray(phase_c["Llama 3.1 8B"]["per_item_deltas"], dtype=float)
 
-    ax1.hist(pre_deltas, bins=20, range=(-0.5, 1.0), color=COLORS["pre"],
+    ax1.hist(pre_deltas, bins=np.arange(-1.05, 1.1, 0.1), color=COLORS["pre"],
              edgecolor="white", linewidth=0.5, alpha=0.85, zorder=3)
     ax1.axvline(x=np.mean(pre_deltas), color="black", linestyle="--",
                 linewidth=1.0, zorder=4)
@@ -290,17 +286,17 @@ def plot_delta_distribution(output_path: str, figsize=(6.5, 3.0)):
 
     ax1.set_xlabel(r"Item-level $\delta_i$")
     ax1.set_ylabel("Count")
-    ax1.set_title("A. Pre-verification (N=100)\nBimodal: broken items inflate mean",
+    ax1.set_title(f"A. Pre-verification (N={len(pre_deltas)}, Llama 8B)\nBimodal: broken items inflate mean",
                   fontweight="bold", fontsize=8, color=COLORS["pre"])
-    ax1.set_xlim(-0.5, 1.1)
+    ax1.set_xlim(-1.05, 1.1)
 
-    # Post-verification: real per-item deltas from Llama 8B
-    if rescored and "llama8b" in rescored:
-        post_deltas = [it["delta"] for it in rescored["llama8b"]["items"]]
-    else:
-        post_deltas = np.clip(np.random.normal(0.11, 0.2, 69), -1, 1).tolist()
+    # Post-verification: observed per-item deltas for Llama 8B
+    # (results/rescored_clean.json). Fail loudly rather than simulate.
+    if not rescored or "llama8b" not in rescored:
+        raise FileNotFoundError("results/rescored_clean.json (llama8b items) required for Figure 2B")
+    post_deltas = [it["delta"] for it in rescored["llama8b"]["items"]]
 
-    ax2.hist(post_deltas, bins=20, range=(-0.5, 1.0), color=COLORS["post"],
+    ax2.hist(post_deltas, bins=np.arange(-1.05, 1.1, 0.1), color=COLORS["post"],
              edgecolor="white", linewidth=0.5, alpha=0.85, zorder=3)
     mean_post = np.mean(post_deltas)
     ax2.axvline(x=mean_post, color="black", linestyle="--",
@@ -317,9 +313,9 @@ def plot_delta_distribution(output_path: str, figsize=(6.5, 3.0)):
                        edgecolor="#2E7D32", alpha=0.8))
 
     ax2.set_xlabel(r"Item-level $\delta_i$")
-    ax2.set_title("B. Post-verification (N=69, Llama 8B)\nConcentrated near zero",
+    ax2.set_title(f"B. Post-verification (N={len(post_deltas)}, Llama 8B)\nConcentrated near zero",
                   fontweight="bold", fontsize=8, color=COLORS["post"])
-    ax2.set_xlim(-0.5, 1.1)
+    ax2.set_xlim(-1.05, 1.1)
 
     plt.tight_layout()
     for ext in ["pdf", "png"]:

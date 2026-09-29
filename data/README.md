@@ -2,7 +2,7 @@
 
 ## Overview
 
-This dataset contains **667 original GSM8K problems** with **3,199 verified
+This dataset contains **667 original GSM8K problems** with **3,199
 tau-isomorphic variants** (3,866 evaluation entries total, ~4.8 variants per
 item).
 
@@ -81,8 +81,12 @@ The pipeline rejected 19,826 candidate variants:
 
 ## Verification
 
-All 3,199 variants have been verified:
+All 3,199 variants passed the generation-time filters:
 - 100% positive integer answers
 - 100% structural fingerprint match with parent
-- 100% forward-execution verified (answer recomputed from DAG)
+- Answers computed by annotation-chain replay (`metadata.verification` in
+  `isomorph_gsm8k_eval.json`); answers not independently verified
 - 100% reasonable range (0 < answer < 10^8)
+
+A later multi-model consensus audit (`audit_results.json`) flagged 41 of the
+100 evaluated items (29 broken, 11 partial, 1 suspicious); see the main README.

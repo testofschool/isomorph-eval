@@ -6,7 +6,7 @@
 
 **A framework for generating verified benchmark variants via tau-isomorphism**
 
-[![arXiv](https://img.shields.io/badge/arXiv-2606.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2606.XXXXX)
+![arXiv](https://img.shields.io/badge/arXiv-ID_pending-lightgrey.svg)
 [![Paper 1: EFSL](https://img.shields.io/badge/Paper_1-EFSL_(Kang_2026)-blue.svg)](https://arxiv.org/abs/2605.11205)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776ab.svg)](https://www.python.org/)
@@ -25,14 +25,14 @@
 
 ## The Cautionary Finding
 
-We built a framework to detect benchmark contamination. Instead, we discovered that **the standard method for computing variant answers produces systematically wrong answers in 41% of items** — creating false contamination signals that are indistinguishable from genuine memorization.
+We built a framework to detect benchmark contamination. Instead, we discovered that **the standard method for computing variant answers (annotation-chain replay) produced variant answers flagged as suspect in 41 of 100 items** — creating false contamination signals that are indistinguishable from genuine memorization.
 
 | | Before Verification | After Verification |
 |---|---|---|
 | **Apparent signal** | All 5 models show Delta ~ +0.42 | 4/5 invariant, 1/5 mild gap (Delta 0.04-0.11) |
 | **Interpretation** | "Universal contamination" | Perturbation sensitivity, not contamination |
 | **Comparison model** | GPT-OSS 120B also appeared "contaminated" | GPT-OSS 120B invariant (p = 0.090) |
-| **Root cause** | 41 of 100 items had wrong variant answers | Verified answers plus entity consistency audit |
+| **Root cause** | 41 of 100 items flagged (29 broken + 11 partial + 1 suspicious; `data/audit_results.json`) — flags come from multi-model consensus (≥2 models agreeing on a different answer) plus rule checks, not ground-truth answer checks | Flagged items removed plus entity consistency audit |
 
 The lesson: **any benchmark variant generation pipeline must independently verify its answers**. Annotation-chain replay — substituting new values into the original solution chain — is unreliable.
 
@@ -116,7 +116,7 @@ Four of five models show no significant performance gap between originals and va
 *Figure 1: The effect of answer verification. Left: all models appear uniformly contaminated (Delta ~ +0.42). Right: after verification, the signal collapses.*
 
 ![Delta Distribution](figures/fig2_delta_distribution.png)
-*Figure 2: Per-item delta distributions. Left: bimodal (broken items inflate mean). Right: concentrated near zero on verified data.*
+*Figure 2: Observed per-item delta distributions for Llama 3.1 8B. Left: pre-verification, N=100 (`results/phase_c_statistics.json`) — bimodal, 45 items at delta=0 and 31 at delta=1 (30 of those 31 are audit-flagged broken/partial). Right: post-verification v2 clean subset, the N=59 items with per-item scores (`results/rescored_clean.json`) — 40/59 at delta=0.*
 
 ---
 
@@ -186,7 +186,7 @@ isomorph-eval/
 | Feature | GSM1K | ConStat | GSM-Symbolic | **Isomorph-Eval** |
 |---------|-------|---------|--------------|-------------------|
 | Structural isomorphism | No | No | No | tau-isomorphism |
-| Verified variant answers | No | No | No | Forward graph execution |
+| Variant answer computation | No | No | No | Annotation-chain replay (answers not independently verified) |
 | IRT difficulty correction | No | No | No | 2PL DIF |
 | Scalable generation | Fixed 1,250 | No | Templates | Arbitrary scale |
 | Bug taxonomy | No | No | No | 8 classes documented |
@@ -213,7 +213,7 @@ isomorph-eval/
          That Annotation-Chain Replay Produces False Contamination
          Signals},
   author={Kang, Jung Min},
-  journal={arXiv preprint arXiv:2606.XXXXX},
+  journal={arXiv preprint (ID pending)},
   year={2026}
 }
 
