@@ -9,7 +9,4 @@ authors:
 repository-code: "https://github.com/testofschool/isomorph-eval"
 license: MIT
 date-released: "2026-05-12"
-# TODO: Update identifiers once arXiv IDs are assigned
-# identifiers:
-#   - type: doi
-#     value: "10.48550/arXiv.2606.XXXXX"
+# arXiv ID pending; add identifiers once assigned.
